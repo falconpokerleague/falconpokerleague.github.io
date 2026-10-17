@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schedule · Falcon Poker League</title>
+<meta name="description" content="The next three weeks of games, and what each night is worth.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0410">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0410'/%3E%3Ctext x='50' y='74' font-size='68' text-anchor='middle' fill='%23ffc83d'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+:root{--void:#0b0410;--ink:#f6efe2;--dim:#b4a68f;--gold:#ffc83d}
+html{background:var(--void)}
+/* A block un-hides its optional parts by removing [hidden]; its own display rules must not
+   out-rank the attribute, or an empty 'Hand of the night' pill shows on a story-less night. */
+[hidden]{display:none!important}
+body{margin:0;background:var(--void);color:var(--ink);
+  font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+/* The typeface reaches into every block. The blocks set their own family on their root id, so
+   the override needs more weight than one id: html body #id beats #id. */
+html body #fpl-board, html body #fpl-schedule, html body #fpl-results, html body #fpl-venues,
+html body #fpl-home{font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+/* The display face on every big title: the neon glow the blocks already paint, in a marquee
+   letterform instead of a heavy sans. */
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1, html body #fpl-home .hm-title, .site-brand{
+  font-family:"Bebas Neue","Inter",Impact,sans-serif;font-weight:400;letter-spacing:.06em}
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1{font-size:clamp(2.4rem,8vw,3.6rem);line-height:1}
+html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
+.site-head{border-bottom:1px solid rgba(255,255,255,.08)}
+.site-bar{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;
+  gap:16px;flex-wrap:wrap}
+.site-brand{color:var(--ink);text-decoration:none;font-size:1.55rem;white-space:nowrap;line-height:1}
+.site-brand .spade{color:var(--gold);margin-right:6px}
+.site-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.site-nav a{color:var(--dim);text-decoration:none;padding:8px 12px;border-radius:999px;
+  font-size:.95rem;line-height:1.2;font-weight:600}
+.site-nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+.site-nav a[aria-current="page"]{color:var(--void);background:var(--gold);font-weight:700}
+.site-main{max-width:1040px;margin:0 auto;padding:16px 16px 40px}
+.site-404{text-align:center;padding:64px 16px}
+.site-404 h1{font-size:1.6rem;margin:0 0 12px}
+.site-404 a{color:var(--gold)}
+@media (max-width:600px){
+  .site-bar{padding:8px 12px;gap:8px}
+  .site-brand{font-size:1.35rem}
+  /* Five items do not fit a phone in one row at the desktop size; a single scrollable row
+     beats a second line, which pushed the page down and read as a broken header. */
+  .site-nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .site-nav::-webkit-scrollbar{display:none}
+  .site-nav a{padding:8px 9px;font-size:.84rem;white-space:nowrap}
+  .site-main{padding:12px 12px 28px}
+}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-bar">
+    <a class="site-brand" href="/"><span class="spade">&spades;</span>Falcon Poker League</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/leaderboard/">Leaderboard</a>
+      <a href="/schedule/" aria-current="page">Schedule</a>
+      <a href="/results/">Recent games</a>
+      <a href="/venues/">Venues</a>
+    </nav>
+  </div>
+</header>
+<main class="site-main">
+
+<div id="fpl-schedule" data-view="grid" class="fpl-cal" data-feed="https://fpl.glortvc.cc/schedule.json">
+  <div class="fpl-inner">
+    <header class="fpl-top">
+      <h2 class="fpl-h1">Falcon Poker League</h2>
+      <p class="fpl-sub">Loading the schedule&hellip;</p>
+    </header>
+
+    <section class="fpl-weeks" hidden>
+      <h3>Double-point weeks this season</h3>
+      <ul></ul>
+    </section>
+
+    <p class="fpl-monthnav" hidden>
+      <button class="fpl-mprev" type="button" aria-label="Previous month">&larr;</button>
+      <span class="fpl-mlabel"></span>
+      <button class="fpl-mnext" type="button" aria-label="Next month">&rarr;</button>
+    </p>
+    <div class="fpl-grid" hidden></div>
+    <ol class="fpl-list"></ol>
+    <p class="fpl-scheduler" hidden>
+      <button class="fpl-prev" type="button">&larr; Previous week</button>
+      <span class="fpl-pglabel"></span>
+      <button class="fpl-next" type="button">Next week &rarr;</button>
+    </p>
+    <p class="fpl-empty" hidden>No scheduled nights to show.</p>
+  </div>
+</div>
+
+<style>
+#fpl-schedule{
+  --fpl-void:#0b0410; --fpl-ink:#f6efe2; --fpl-dim:#b4a68f;
+  --fpl-pink:#ff2d95; --fpl-cyan:#26e6f5; --fpl-gold:#ffc83d;
+  background:radial-gradient(1200px 600px at 20% -10%, #2a0b33 0%, transparent 60%),
+             radial-gradient(900px 500px at 90% 10%, #06303a 0%, transparent 55%),
+             var(--fpl-void);
+  color:var(--fpl-ink);
+  padding:26px 14px 34px;
+  border-radius:16px;
+  font-family:"Segoe UI",Roboto,-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  line-height:1.45;
+  overflow:hidden;
+}
+#fpl-schedule *{box-sizing:border-box}
+#fpl-schedule .fpl-inner{max-width:1000px;margin:0 auto}
+
+#fpl-schedule .fpl-top{text-align:center;margin:0 0 6px}
+#fpl-schedule .fpl-h1{
+  margin:0;font-size:clamp(1.6rem,6vw,2.6rem);font-weight:800;letter-spacing:.02em;
+  color:#fff;text-shadow:0 0 12px rgba(255,45,149,.75),0 0 34px rgba(255,45,149,.35);
+}
+#fpl-schedule .fpl-sub{margin:6px 0 0;color:var(--fpl-gold);font-size:.95rem;letter-spacing:.06em}
+
+#fpl-schedule .fpl-weeks{
+  margin:22px 0 8px;padding:16px 18px;border-radius:14px;
+  background:linear-gradient(160deg,#220d2a,#12061a);border:1px solid rgba(255,45,149,.45);
+}
+#fpl-schedule .fpl-weeks h3{
+  margin:0 0 10px;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--fpl-gold);font-weight:700;
+}
+#fpl-schedule .fpl-weeks ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+#fpl-schedule .fpl-weeks li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-size:.92rem}
+#fpl-schedule .fpl-weeks .wl{color:#fff;font-weight:600}
+#fpl-schedule .fpl-weeks .wd{color:var(--fpl-dim)}
+#fpl-schedule .fpl-weeks li.past{opacity:.45}
+#fpl-schedule .fpl-weeks li.past .wd::after{content:" — done"}
+
+#fpl-schedule .fpl-list{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px}
+#fpl-schedule .night{
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+  padding:14px 16px;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+}
+#fpl-schedule .night.special{
+  background:linear-gradient(140deg,rgba(255,200,61,.14),rgba(255,45,149,.10));
+  border-color:rgba(255,200,61,.55);
+}
+#fpl-schedule .night.today{box-shadow:0 0 0 2px var(--fpl-cyan)}
+#fpl-schedule .when{min-width:104px}
+#fpl-schedule .dow{font-weight:700;color:#fff;font-size:1rem;line-height:1.2}
+#fpl-schedule .date{color:var(--fpl-dim);font-size:.82rem}
+#fpl-schedule .venue{font-size:1.02rem;color:var(--fpl-ink);min-width:0}
+#fpl-schedule .why{display:block;color:var(--fpl-gold);font-size:.8rem;margin-top:2px}
+#fpl-schedule .mult{
+  font-weight:800;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 9px;border-radius:6px;white-space:nowrap;background:var(--fpl-gold);color:#06030a;
+}
+#fpl-schedule .tonight{
+  display:inline-block;margin-left:8px;font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:800;color:var(--fpl-cyan);
+}
+#fpl-schedule .fpl-empty{margin:30px 0;color:var(--fpl-dim);text-align:center}
+
+/* WEEK GRID, site only (data-view="grid", set by build_site.py). A desktop list left most of
+   each row empty between the venue and the multiplier (Jason, 2026-10-17: "a lot of wasted
+   space"); seven columns show the same three weeks in a third of the height, and the shape of
+   the week reads at a glance. Below 700px the columns are too narrow for a venue name, so a
+   phone keeps the list. The GoDaddy block never sets the attribute and never shows the grid. */
+#fpl-schedule .fpl-monthnav{margin:22px 0 0;display:flex;align-items:center;justify-content:center;gap:18px}
+#fpl-schedule .fpl-monthnav[hidden]{display:none}
+#fpl-schedule .fpl-mlabel{min-width:11em;text-align:center;font-weight:800;color:#fff;font-size:1.05rem;letter-spacing:.04em}
+#fpl-schedule .fpl-mprev,#fpl-schedule .fpl-mnext{
+  font:inherit;font-weight:700;font-size:1rem;width:36px;height:36px;border-radius:50%;cursor:pointer;
+  color:var(--fpl-cyan);background:transparent;border:1px solid var(--fpl-cyan);
+}
+#fpl-schedule .fpl-mprev:hover,#fpl-schedule .fpl-mnext:hover{background:rgba(38,230,245,.1)}
+#fpl-schedule .fpl-grid{margin:12px 0 0;display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+#fpl-schedule .fpl-grid .gd.out{visibility:hidden}
+/* A night worth more than x1 wears a banner on its date; a plain night wears nothing (Jason,
+   2026-10-17: "remove the x1 or x2 and replace it with an appropriate banner"). */
+#fpl-schedule .gb{
+  margin-top:4px;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
+  color:#06030a;background:var(--fpl-gold);border-radius:6px;padding:3px 7px;text-align:center;
+}
+#fpl-schedule .fpl-grid .gh{
+  text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fpl-dim);font-weight:700;padding:2px 0 4px;
+}
+#fpl-schedule .fpl-grid .gd{
+  min-height:92px;padding:8px 9px;border-radius:10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  display:flex;flex-direction:column;gap:2px;
+}
+#fpl-schedule .fpl-grid .gd.off{background:transparent;border-color:rgba(255,255,255,.05)}
+#fpl-schedule .fpl-grid .gd.past{opacity:.45}
+#fpl-schedule .fpl-grid .gd.today{box-shadow:0 0 0 2px var(--fpl-cyan)}
+#fpl-schedule .fpl-grid .gd.special{
+  background:linear-gradient(140deg,rgba(255,200,61,.14),rgba(255,45,149,.10));
+  border-color:rgba(255,200,61,.55);
+}
+#fpl-schedule .fpl-grid .gn{font-size:.8rem;color:var(--fpl-dim);display:flex;justify-content:space-between;align-items:baseline}
+#fpl-schedule .fpl-grid .gn b{color:#fff;font-weight:700;font-size:.95rem}
+#fpl-schedule .fpl-grid .gv{font-size:.9rem;color:#fff;line-height:1.25;margin-top:4px}
+#fpl-schedule .fpl-grid .gt{font-size:.78rem;color:var(--fpl-gold)}
+#fpl-schedule .fpl-grid .gw{font-size:.74rem;color:var(--fpl-gold);line-height:1.2}
+#fpl-schedule .fpl-grid .gd.today .gt{color:var(--fpl-cyan);font-weight:800}
+#fpl-schedule[data-view="grid"] .fpl-grid[hidden]{display:none}
+/* The phone list shows ONE WEEK at a time, seven days from today, and the pager swaps the week
+   in place (Jason, 2026-10-17: "a week at a time, replace the current games"). The weeks are
+   already in hand from the feed, so paging is a reveal, not a request. Site mode only. */
+#fpl-schedule .fpl-list li.offweek{display:none}
+#fpl-schedule .fpl-scheduler{margin:16px 0 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
+#fpl-schedule .fpl-scheduler[hidden]{display:none}
+#fpl-schedule .fpl-pglabel{color:var(--fpl-dim);font-size:.82rem;text-align:center}
+#fpl-schedule .fpl-prev,#fpl-schedule .fpl-next{
+  font:inherit;font-weight:700;font-size:.84rem;padding:8px 12px;border-radius:999px;cursor:pointer;
+  color:var(--fpl-cyan);background:transparent;border:1px solid var(--fpl-cyan);white-space:nowrap;
+}
+#fpl-schedule .fpl-prev:disabled,#fpl-schedule .fpl-next:disabled{opacity:.3;cursor:default}
+@media (min-width:700px){
+  #fpl-schedule[data-view="grid"] .fpl-grid:not([hidden]){display:grid}
+  #fpl-schedule[data-view="grid"] .fpl-monthnav:not([hidden]){display:flex}
+  #fpl-schedule[data-view="grid"] .fpl-list{display:none}
+  #fpl-schedule[data-view="grid"] .fpl-scheduler{display:none}
+}
+@media (max-width:699px){
+  #fpl-schedule[data-view="grid"] .fpl-grid{display:none}
+  #fpl-schedule[data-view="grid"] .fpl-monthnav{display:none}
+}
+/* A phone keeps the SINGLE-ROW layout, compacted, rather than wrapping the multiplier onto its
+   own line. Wrapping cost ~34px on each of 18 nights, which was essentially this page's whole
+   616px desktop-vs-mobile difference. That matters because the block's host section has its
+   height set by hand, one value for every screen, so any difference between the two is dead
+   space the shorter screen carries. The three columns do fit at 390px once the day column, the
+   gaps and the padding stop being desktop-sized: the venue text gets ~200px, comfortably more
+   than the longest name in the rotation needs. Verify with scripts/measure_page_heights.py.
+   (Deliberately not naming that venue here: this comment ships into the owner's site with the
+   block, and a venue name in the markup is exactly what tests/test_schedule_feed.py looks for
+   to prove no night got baked back in.) */
+@media (max-width:520px){
+  #fpl-schedule .night{gap:8px;padding:10px 12px}
+  #fpl-schedule .when{min-width:0}
+  #fpl-schedule .dow{font-size:.94rem}
+  #fpl-schedule .date{font-size:.76rem}
+  #fpl-schedule .venue{font-size:.96rem}
+  #fpl-schedule .why{font-size:.74rem}
+  #fpl-schedule .mult{font-size:.62rem;padding:4px 7px}
+}
+</style>
+
+<script>
+(function () {
+  "use strict";
+  var root = document.getElementById("fpl-schedule");
+  if (!root) { return; }
+  var FEED = root.getAttribute("data-feed");
+  // Scoped to the block by CLASS, not looked up by id on the document. build_paste_blocks.py
+  // rewrites the root id so several blocks can share one of the owner's pages; anything found
+  // by a global id would either dangle after that rewrite or collide with a second block.
+  var sub   = root.querySelector(".fpl-sub");
+  var weeks = root.querySelector(".fpl-weeks");
+  var wlist = root.querySelector(".fpl-weeks ul");
+  var list  = root.querySelector(".fpl-list");
+  var grid  = root.querySelector(".fpl-grid");
+  var mnav  = root.querySelector(".fpl-monthnav");
+  var mprev = root.querySelector(".fpl-mprev");
+  var mnext = root.querySelector(".fpl-mnext");
+  var mlabel = root.querySelector(".fpl-mlabel");
+  var pager = root.querySelector(".fpl-scheduler");
+  var prev  = root.querySelector(".fpl-prev");
+  var next  = root.querySelector(".fpl-next");
+  var pglabel = root.querySelector(".fpl-pglabel");
+  var GRID  = root.getAttribute("data-view") === "grid";
+  var empty = root.querySelector(".fpl-empty");
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) { n.className = cls; }
+    if (text !== undefined && text !== null) { n.textContent = String(text); }
+    return n;
+  }
+
+  function fail(msg) {
+    sub.textContent = msg;
+    if (empty) { empty.hidden = true; }
+  }
+
+  function multLabel(m) {
+    return m === 2 ? "Double points" : m === 3 ? "Triple points" : "×" + m + " points";
+  }
+
+  function week(w) {
+    var li = el("li", w.past ? "past" : "");
+    li.appendChild(el("span", "wl", w.label));
+    li.appendChild(el("span", "wd", w.from + " – " + w.to));
+    return li;
+  }
+
+  function night(n) {
+    var li = el("li", "night" + (n.special ? " special" : "") + (n.is_today ? " today" : ""));
+
+    var when = el("div", "when");
+    when.appendChild(el("div", "dow", n.weekday));
+    when.appendChild(el("div", "date", n.day));
+    li.appendChild(when);
+
+    var venue = el("div", "venue");
+    venue.appendChild(document.createTextNode(n.venue || ""));
+    // "Tonight at 6:00 PM", or "Today at noon" for a day game. A word ("Noon") reads lowercase
+    // after "at"; a clock time keeps its case. (No weekday names in this file:
+    // tests/test_schedule_feed.py reads one as a baked-in night.)
+    var at = n.start ? (/^[A-Za-z]+$/.test(n.start) ? n.start.toLowerCase() : n.start) : "";
+    if (n.is_today) {
+      venue.appendChild(el("span", "tonight", at ? ((n.start === "Noon" ? "Today at " : "Tonight at ") + at) : "Tonight"));
+    } else if (n.start) {
+      venue.appendChild(el("span", "why", n.start));
+    }
+    // The reasons are plain prose from the multiplier calendar ("holiday (Labor Day)"), so they
+    // go in as TEXT. The Jinja this replaced marked the joined string |safe, which was only ever
+    // about the separator entity — nothing here is markup and nothing here should become markup.
+    if (n.reasons && n.reasons.length) {
+      venue.appendChild(el("span", "why", n.reasons.join(" · ")));
+    }
+    li.appendChild(venue);
+
+    if (n.multiplier > 1) { li.appendChild(el("div", "mult", multLabel(n.multiplier))); }
+    return li;
+  }
+
+  // The week grid: every day from the first night's week to the last night's, seven to a row,
+  // week starting on the first day of the rotation. Dates are parsed as LOCAL dates (y, m-1, d)
+  // so a night never slides a day at a UTC offset. Day names come from the dates themselves
+  // (toLocaleDateString), not from this file — tests/test_schedule_feed.py reads a weekday
+  // name in the markup as a baked-in night.
+  function localDate(iso) {
+    var p = iso.split("-");
+    return new Date(+p[0], +p[1] - 1, +p[2]);
+  }
+  function isoOf(d) {
+    var m = d.getMonth() + 1, day = d.getDate();
+    return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
+  }
+  // MONTH VIEW (desktop, site only). One calendar month per screen, weeks starting on the day
+  // JS numbers 0 (the league's calendars start there — Jason, 2026-10-17: "we start our
+  // calendars on Sunday"), with arrows to any earlier or later month. Each month is fetched
+  // from the same feed with ?from=&days= — the schedule is derived from the rotation and the
+  // multiplier calendar, so any month costs the box the same as the default window.
+  var monthCache = {};
+  var shown = null;      // { y, m } of the month on screen
+
+  function monthFeed(y, m) {
+    var days = new Date(y, m + 1, 0).getDate();
+    var from = isoOf(new Date(y, m, 1));
+    return FEED + (FEED.indexOf("?") === -1 ? "?" : "&") + "from=" + from + "&days=" + days;
+  }
+
+  // Range: this month and the two after it (Jason, 2026-10-17: "just be able to go forward two
+  // months"). Earlier months are history, and the results page already tells that story.
+  var MONTHS_AHEAD = 2;
+  var base = null;       // this month, as a month index (y * 12 + m)
+
+  function startMonths(todayIso) {
+    var t = localDate(todayIso);
+    base = t.getFullYear() * 12 + t.getMonth();
+    mprev.addEventListener("click", function () { showMonth(shown.y, shown.m - 1, todayIso); });
+    mnext.addEventListener("click", function () { showMonth(shown.y, shown.m + 1, todayIso); });
+    showMonth(t.getFullYear(), t.getMonth(), todayIso);
+  }
+
+  function showMonth(y, m, todayIso) {
+    var d0 = new Date(y, m, 1);
+    y = d0.getFullYear(); m = d0.getMonth();
+    var idx = y * 12 + m;
+    if (idx < base || idx > base + MONTHS_AHEAD) { return; }
+    shown = { y: y, m: m };
+    mlabel.textContent = d0.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    mprev.disabled = idx <= base;
+    mnext.disabled = idx >= base + MONTHS_AHEAD;
+    mnav.hidden = false;
+    var key = y + "-" + m;
+    if (monthCache[key]) { drawMonth(y, m, monthCache[key], todayIso); return; }
+    grid.hidden = true;
+    fetch(monthFeed(y, m), { cache: "no-cache" })
+      .then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.json(); })
+      .then(function (p) {
+        monthCache[key] = p.nights || [];
+        if (shown.y === y && shown.m === m) { drawMonth(y, m, monthCache[key], todayIso); }
+      })
+      .catch(function () {
+        if (shown.y === y && shown.m === m) { drawMonth(y, m, [], todayIso); }
+      });
+  }
+
+  function drawMonth(y, m, nights, todayIso) {
+    grid.innerHTML = "";
+    var byIso = {};
+    nights.forEach(function (n) { byIso[n.iso] = n; });
+    var first = new Date(y, m, 1), last = new Date(y, m + 1, 0);
+    var start = new Date(first); start.setDate(first.getDate() - first.getDay());
+    var end = new Date(last); end.setDate(last.getDate() + (6 - last.getDay()));
+    for (var h = 0; h < 7; h++) {
+      var hd = new Date(start); hd.setDate(start.getDate() + h);
+      grid.appendChild(el("div", "gh", hd.toLocaleDateString("en-US", { weekday: "short" })));
+    }
+    for (var d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      var iso = isoOf(d), n = byIso[iso], inMonth = d.getMonth() === m;
+      var cell = el("div", "gd" + (inMonth ? "" : " out") + (n ? "" : " off")
+                         + (n && n.special ? " special" : "")
+                         + (n && n.is_today ? " today" : "")
+                         + (todayIso && iso < todayIso ? " past" : ""));
+      var num = el("div", "gn");
+      num.appendChild(el("b", null, String(d.getDate())));
+      cell.appendChild(num);
+      if (n && inMonth) {
+        cell.appendChild(el("div", "gv", n.venue || ""));
+        if (n.start) { cell.appendChild(el("div", "gt", n.is_today ? (n.start === "Noon" ? "Today at noon" : "Tonight at " + n.start) : n.start)); }
+        if (n.multiplier > 1) { cell.appendChild(el("div", "gb", multLabel(n.multiplier))); }
+        if (n.reasons && n.reasons.length) { cell.appendChild(el("div", "gw", n.reasons.join(" \u00b7 "))); }
+      }
+      grid.appendChild(cell);
+    }
+    grid.hidden = false;
+  }
+
+  // Site mode, phone widths: one week at a time, seven days from today, paged in place. The
+  // whole window is already in the feed, so a page turn is a reveal, not a request.
+  function pageList(nights, todayIso, throughIso) {
+    var today = localDate(todayIso);
+    var last = localDate(throughIso || nights[nights.length - 1].iso);
+    // Round the day count: a daylight-saving change inside the window makes the difference
+    // 27 days and an hour, which ceil() alone would turn into a fifth, empty week.
+    var pages = Math.max(1, Math.ceil((Math.round((last - today) / 86400000) + 1) / 7));
+    var page = 0;
+    function show() {
+      var from = new Date(today); from.setDate(today.getDate() + page * 7);
+      var to = new Date(from); to.setDate(from.getDate() + 6);
+      var lo = isoOf(from), hi = isoOf(to);
+      Array.prototype.forEach.call(list.children, function (li, i) {
+        var n = nights[i];
+        var on = n && n.iso >= lo && n.iso <= hi;
+        li.className = li.className.replace(/ ?offweek/, "") + (on ? "" : " offweek");
+      });
+      var fmt = function (d) { return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); };
+      pglabel.textContent = page === 0 ? "This week" : fmt(from) + " – " + fmt(to);
+      prev.disabled = page === 0;
+      next.disabled = page >= pages - 1;
+    }
+    prev.addEventListener("click", function () { if (page > 0) { page--; show(); root.scrollIntoView({ block: "start" }); } });
+    next.addEventListener("click", function () { if (page < pages - 1) { page++; show(); root.scrollIntoView({ block: "start" }); } });
+    show();
+    pager.hidden = false;
+  }
+
+  function build(payload) {
+    sub.textContent = "Schedule · " + (payload.season_label || "");
+
+    var dw = payload.double_weeks || [];
+    wlist.innerHTML = "";
+    dw.forEach(function (w) { wlist.appendChild(week(w)); });
+    weeks.hidden = !dw.length;
+
+    var nights = payload.nights || [];
+    list.innerHTML = "";
+    nights.forEach(function (n) { list.appendChild(night(n)); });
+    if (empty) { empty.hidden = !!nights.length; }
+    if (GRID && grid && payload.generated) { startMonths(payload.generated); }
+    if (GRID && pager && payload.generated) { pageList(nights, payload.generated, payload.through); }
+  }
+
+  try {
+    fetch(FEED, { cache: "no-cache" })
+      .then(function (r) {
+        if (!r.ok) { throw new Error(r.status); }
+        return r.json();
+      })
+      .then(build)
+      .catch(function () {
+        fail("The schedule is briefly unavailable — please check back shortly.");
+      });
+  } catch (e) {
+    fail("The schedule is briefly unavailable — please check back shortly.");
+  }
+})();
+</script>
+</main>
+</body>
+</html>
