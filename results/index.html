@@ -154,12 +154,19 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
   padding:9px 12px;border-radius:10px;background:rgba(0,0,0,.28);
 }
 #fpl-results .place{
-  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
-  font-weight:800;font-size:.8rem;color:#06030a;background:var(--fpl-dim);
+  --pc:var(--fpl-dim); --ps:#2b251c;
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;position:relative;
+  font-weight:800;font-size:.8rem;color:#06030a;
+  /* A poker chip (the same drawing as the leaderboard rank, four spots at this size). */
+  background:
+    radial-gradient(circle, var(--pc) 0 56%, transparent 57%),
+    repeating-conic-gradient(from -22.5deg, var(--ps) 0 45deg, var(--pc) 45deg 90deg);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);
 }
-#fpl-results .spot.p1 .place{background:var(--fpl-gold)}
-#fpl-results .spot.p2 .place{background:#cfd8dc}
-#fpl-results .spot.p3 .place{background:#c98b5e}
+#fpl-results .place::after{content:"";position:absolute;inset:16%;border-radius:50%;border:1px solid rgba(0,0,0,.28);pointer-events:none}
+#fpl-results .spot.p1 .place{--pc:var(--fpl-gold);--ps:#3a2a00}
+#fpl-results .spot.p2 .place{--pc:#cfd8dc;--ps:#3a3f42}
+#fpl-results .spot.p3 .place{--pc:#c98b5e;--ps:#3a2414}
 #fpl-results .spot.p1{background:linear-gradient(120deg,rgba(255,200,61,.16),rgba(0,0,0,.28))}
 #fpl-results .who{font-weight:600;color:var(--fpl-ink)}
 #fpl-results .spot.p1 .who{color:#fff}
