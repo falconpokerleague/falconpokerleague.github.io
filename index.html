@@ -101,6 +101,14 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     <p class="hm-sub" id="hm-season">&nbsp;</p>
   </section>
 
+  <!-- The owner's announcement (schedule.json → announcement). Hidden until there is one; the
+       text goes in with textContent, so nothing typed on the tools page can become markup. -->
+  <section class="hm-notice" id="hm-notice" hidden>
+    <p class="hm-label hm-notice-label">Announcement</p>
+    <p class="hm-notice-title" id="hm-notice-title" hidden></p>
+    <p class="hm-notice-text" id="hm-notice-text"></p>
+  </section>
+
   <section class="hm-next" id="hm-next" aria-live="polite">
     <p class="hm-label">Next game</p>
     <p class="hm-big" id="hm-next-big">Loading the schedule&hellip;</p>
@@ -157,6 +165,14 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 }
 #fpl-home .hm-sub{margin:12px 0 0;color:var(--fpl-dim);font-size:1rem}
 
+#fpl-home .hm-notice{
+  margin:14px 0 0;padding:16px 20px;border-radius:16px;
+  background:linear-gradient(120deg,rgba(38,230,245,.12),rgba(0,0,0,.28));
+  border:1px solid rgba(38,230,245,.55);
+}
+#fpl-home .hm-notice .hm-label{color:var(--fpl-cyan)}
+#fpl-home .hm-notice-title{margin:0;font-size:1.15rem;font-weight:800;color:#fff;line-height:1.2}
+#fpl-home .hm-notice-text{margin:4px 0 0;color:var(--fpl-ink);font-size:1rem;line-height:1.5;white-space:pre-line}
 #fpl-home .hm-next{
   margin:14px 0 0;padding:18px 20px;border-radius:16px;
   background:linear-gradient(120deg,rgba(255,200,61,.14),rgba(255,45,149,.10));
@@ -249,6 +265,15 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 
   // ---- the next game + the nights ahead (schedule.json)
   get(root.getAttribute("data-schedule")).then(function (s) {
+    // The owner's announcement, above NEXT GAME, only while the feed carries one.
+    var a = s.announcement;
+    if (a && a.text) {
+      var nt = document.getElementById("hm-notice-title");
+      nt.textContent = a.title || "";
+      nt.hidden = !a.title;
+      document.getElementById("hm-notice-text").textContent = a.text;
+      document.getElementById("hm-notice").hidden = false;
+    }
     // A night marked played is finished and on the boards, so it is no longer "next" even if
     // it is today: the line moves on with the results, not at midnight.
     var nights = (s.nights || []).filter(function (x) { return !x.played; });
