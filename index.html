@@ -204,8 +204,10 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 }
 #fpl-home .hm-place{
   --pc:var(--fpl-dim); --ps:#2b251c;
-  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;position:relative;
+  width:26px;height:26px;border-radius:50%;display:block;text-align:center;position:relative;
   font-weight:800;font-size:.8rem;color:#06030a;
+  /* One full-height line box + .7px top padding: see frag_results.html .place for why. */
+  line-height:25.3px;padding:.7px 0 0;
   /* A poker chip, the same drawing as the Recent games podium and the leaderboard rank. */
   background:
     radial-gradient(circle, var(--pc) 0 56%, transparent 57%),

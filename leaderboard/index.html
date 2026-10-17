@@ -351,8 +351,11 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 }
 
 #fpl-board .fpl-chip{
-  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;position:relative;
+  width:40px;height:40px;border-radius:50%;display:block;text-align:center;position:relative;
   font-weight:800;font-size:1rem;color:#06030a;font-variant-numeric:tabular-nums;
+  /* One full-height line box + .7px top padding (not grid centering): the digit's baseline snaps
+     to whole pixels; this is the middle of the band that measured centered (2026-10-17). */
+  line-height:39.3px;padding:.7px 0 0;
   /* A poker chip: the tier color is the face, eight pale edge spots ring it (a repeating conic
      gradient under a radial face), a thin inner ring in the pseudo-element below. */
   background:

@@ -155,8 +155,12 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 }
 #fpl-results .place{
   --pc:var(--fpl-dim); --ps:#2b251c;
-  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;position:relative;
+  width:26px;height:26px;border-radius:50%;display:block;text-align:center;position:relative;
   font-weight:800;font-size:.8rem;color:#06030a;
+  /* One full-height line box, not grid centering: the digit's baseline snaps to whole pixels, so
+     centering a line box left the number up to 1.2 px high on some pages. 0.7 px of top padding
+     is the middle of the band (0.5-0.9) that measured centered on every page (2026-10-17). */
+  line-height:25.3px;padding:.7px 0 0;
   /* A poker chip (the same drawing as the leaderboard rank, four spots at this size). */
   background:
     radial-gradient(circle, var(--pc) 0 56%, transparent 57%),
