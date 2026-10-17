@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venues · Falcon Poker League</title>
+<meta name="description" content="Where we play, and which night each place hosts.">
+<link rel="canonical" href="https://falconpokerleague.com/venues/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Falcon Poker League">
+<meta property="og:title" content="Venues · Falcon Poker League">
+<meta property="og:description" content="Where we play, and which night each place hosts.">
+<meta property="og:url" content="https://falconpokerleague.com/venues/">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0410">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0410'/%3E%3Ctext x='50' y='74' font-size='68' text-anchor='middle' fill='%23ffc83d'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+:root{--void:#0b0410;--ink:#f6efe2;--dim:#b4a68f;--gold:#ffc83d}
+html{background:var(--void)}
+/* A block un-hides its optional parts by removing [hidden]; its own display rules must not
+   out-rank the attribute, or an empty 'Hand of the night' pill shows on a story-less night. */
+[hidden]{display:none!important}
+body{margin:0;background:var(--void);color:var(--ink);
+  font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+/* The typeface reaches into every block. The blocks set their own family on their root id, so
+   the override needs more weight than one id: html body #id beats #id. */
+html body #fpl-board, html body #fpl-schedule, html body #fpl-results, html body #fpl-venues,
+html body #fpl-home{font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+/* The display face on every big title: the neon glow the blocks already paint, in a marquee
+   letterform instead of a heavy sans. */
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1, html body #fpl-home .hm-title, .site-brand{
+  font-family:"Bebas Neue","Inter",Impact,sans-serif;font-weight:400;letter-spacing:.06em}
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1{font-size:clamp(2.4rem,8vw,3.6rem);line-height:1}
+html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
+.site-head{border-bottom:1px solid rgba(255,255,255,.08)}
+.site-bar{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;
+  gap:16px;flex-wrap:wrap}
+.site-brand{color:var(--ink);text-decoration:none;font-size:1.55rem;white-space:nowrap;line-height:1}
+.site-brand .spade{color:var(--gold);margin-right:6px}
+.site-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.site-nav a{color:var(--dim);text-decoration:none;padding:8px 12px;border-radius:999px;
+  font-size:.95rem;line-height:1.2;font-weight:600}
+.site-nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+.site-nav a[aria-current="page"]{color:var(--void);background:var(--gold);font-weight:700}
+.site-main{max-width:1040px;margin:0 auto;padding:16px 16px 40px}
+.site-404{text-align:center;padding:64px 16px}
+.site-404 h1{font-size:1.6rem;margin:0 0 12px}
+.site-404 a{color:var(--gold)}
+@media (max-width:600px){
+  .site-bar{padding:8px 12px;gap:8px}
+  .site-brand{font-size:1.35rem}
+  /* Five items do not fit a phone in one row at the desktop size; a single scrollable row
+     beats a second line, which pushed the page down and read as a broken header. */
+  .site-nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .site-nav::-webkit-scrollbar{display:none}
+  .site-nav a{padding:8px 9px;font-size:.84rem;white-space:nowrap}
+  .site-main{padding:12px 12px 28px}
+}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-bar">
+    <a class="site-brand" href="/"><span class="spade">&spades;</span>Falcon Poker League</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/leaderboard/">Leaderboard</a>
+      <a href="/schedule/">Schedule</a>
+      <a href="/results/">Recent games</a>
+      <a href="/venues/" aria-current="page">Venues</a>
+    </nav>
+  </div>
+</header>
+<main class="site-main">
+
+<div id="fpl-venues" class="fpl-maps fpl-ven">
+  <div class="fpl-inner">
+    <header class="fpl-top">
+      <h2 class="fpl-h1">Falcon Poker League</h2>
+      <p class="fpl-sub">Venues &middot; where we play</p>
+    </header>
+
+    
+    <p class="fpl-hint">Where we play, and which day each place hosts.</p>
+    
+
+    <ol class="fpl-vens">
+      
+      <li class="ven">
+        
+        
+        <div class="vcard">
+          <span class="vname">Jak&#39;s Dublin</span>
+          <span class="vrow"><span class="vnight">Mondays</span><span class="vtime">5:45 PM</span></span>
+          
+          <span class="vcheck">Check-in by 5:15 PM</span>
+          
+            <span class="vaddr">7715 Dublin Blvd<br>Colorado Springs, CO 80923</span>
+          
+        </div>
+        
+
+        
+        
+        <div class="vmap">
+          <iframe src="https://www.google.com/maps?q=Jak%27s+Dublin%2C+7715+Dublin+Blvd%2C+Colorado+Springs%2C+CO+80923&amp;output=embed" title="Map of Jak&#39;s Dublin" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        
+        
+        
+        
+        <a class="vgo" href="https://www.google.com/maps/search/?api=1&amp;query=Jak%27s+Dublin%2C+7715+Dublin+Blvd%2C+Colorado+Springs%2C+CO+80923" target="_top" rel="noopener noreferrer">
+          Get directions &rarr;
+        </a>
+        
+      </li>
+      
+      <li class="ven">
+        
+        
+        <div class="vcard">
+          <span class="vname">Jak&#39;s Falcon</span>
+          <span class="vrow"><span class="vnight">Tuesdays</span><span class="vtime">6:00 PM</span></span>
+          
+          <span class="vcheck">Check-in by 5:30 PM</span>
+          
+            <span class="vaddr">11860 Stapleton Dr<br>Peyton, CO 80831</span>
+          
+        </div>
+        
+
+        
+        
+        <div class="vmap">
+          <iframe src="https://www.google.com/maps?q=Jak%27s+Falcon%2C+11860+Stapleton+Dr%2C+Peyton%2C+CO+80831&amp;output=embed" title="Map of Jak&#39;s Falcon" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        
+        
+        
+        
+        <a class="vgo" href="https://www.google.com/maps/search/?api=1&amp;query=Jak%27s+Falcon%2C+11860+Stapleton+Dr%2C+Peyton%2C+CO+80831" target="_top" rel="noopener noreferrer">
+          Get directions &rarr;
+        </a>
+        
+      </li>
+      
+      <li class="ven">
+        
+        
+        <div class="vcard">
+          <span class="vname">Jak&#39;s Old Ranch</span>
+          <span class="vrow"><span class="vnight">Wednesdays</span><span class="vtime">6:00 PM</span></span>
+          
+          <span class="vcheck">Check-in by 5:30 PM</span>
+          
+            <span class="vaddr">3582 Blue Horizon Vw<br>Colorado Springs, CO 80920</span>
+          
+        </div>
+        
+
+        
+        
+        <div class="vmap">
+          <iframe src="https://www.google.com/maps?q=Jak%27s+Old+Ranch%2C+3582+Blue+Horizon+Vw%2C+Colorado+Springs%2C+CO+80920&amp;output=embed" title="Map of Jak&#39;s Old Ranch" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        
+        
+        
+        
+        <a class="vgo" href="https://www.google.com/maps/search/?api=1&amp;query=Jak%27s+Old+Ranch%2C+3582+Blue+Horizon+Vw%2C+Colorado+Springs%2C+CO+80920" target="_top" rel="noopener noreferrer">
+          Get directions &rarr;
+        </a>
+        
+      </li>
+      
+      <li class="ven">
+        
+        
+        <div class="vcard">
+          <span class="vname">Red&#39;s American Grill</span>
+          <span class="vrow"><span class="vnight">Thursdays</span><span class="vtime">6:00 PM</span></span>
+          
+          <span class="vcheck">Check-in by 5:30 PM</span>
+          
+            <span class="vaddr">7376 McLaughlin Rd<br>Falcon, CO 80831</span>
+          
+        </div>
+        
+
+        
+        
+        <div class="vmap">
+          <iframe src="https://www.google.com/maps?q=Red%27s+American+Grill%2C+7376+McLaughlin+Rd%2C+Falcon%2C+CO+80831&amp;output=embed" title="Map of Red&#39;s American Grill" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        
+        
+        
+        
+        <a class="vgo" href="https://www.google.com/maps/search/?api=1&amp;query=Red%27s+American+Grill%2C+7376+McLaughlin+Rd%2C+Falcon%2C+CO+80831" target="_top" rel="noopener noreferrer">
+          Get directions &rarr;
+        </a>
+        
+      </li>
+      
+      <li class="ven">
+        
+        
+        <div class="vcard">
+          <span class="vname">Purple Toad</span>
+          <span class="vrow"><span class="vnight">Saturdays</span><span class="vtime">Noon</span></span>
+          
+          <span class="vcheck">Check-in by 11:30 AM</span>
+          
+            <span class="vaddr">11870 Stapleton Dr<br>Peyton, CO 80831</span>
+          
+        </div>
+        
+
+        
+        
+        <div class="vmap">
+          <iframe src="https://www.google.com/maps?q=Purple+Toad%2C+11870+Stapleton+Dr%2C+Peyton%2C+CO+80831&amp;output=embed" title="Map of Purple Toad" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        
+        
+        
+        
+        <a class="vgo" href="https://www.google.com/maps/search/?api=1&amp;query=Purple+Toad%2C+11870+Stapleton+Dr%2C+Peyton%2C+CO+80831" target="_top" rel="noopener noreferrer">
+          Get directions &rarr;
+        </a>
+        
+      </li>
+      
+    </ol>
+
+  </div>
+</div>
+
+<style>
+#fpl-venues{
+  --fpl-void:#0b0410; --fpl-ink:#f6efe2; --fpl-dim:#b4a68f;
+  --fpl-pink:#ff2d95; --fpl-cyan:#26e6f5; --fpl-gold:#ffc83d;
+  background:radial-gradient(1200px 600px at 20% -10%, #2a0b33 0%, transparent 60%),
+             radial-gradient(900px 500px at 90% 10%, #06303a 0%, transparent 55%),
+             var(--fpl-void);
+  color:var(--fpl-ink);
+  padding:26px 14px 34px;
+  border-radius:16px;
+  font-family:"Segoe UI",Roboto,-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  line-height:1.45;
+  overflow:hidden;
+}
+#fpl-venues *{box-sizing:border-box}
+#fpl-venues .fpl-inner{max-width:1000px;margin:0 auto}
+#fpl-venues .fpl-top{text-align:center;margin:0 0 6px}
+#fpl-venues .fpl-h1{
+  margin:0;font-size:clamp(1.6rem,6vw,2.6rem);font-weight:800;letter-spacing:.02em;
+  color:#fff;text-shadow:0 0 12px rgba(255,45,149,.75),0 0 34px rgba(255,45,149,.35);
+}
+#fpl-venues .fpl-sub{margin:6px 0 0;color:var(--fpl-gold);font-size:.95rem;letter-spacing:.06em}
+#fpl-venues .fpl-hint{margin:16px 0 12px;text-align:center;color:var(--fpl-dim);font-size:.86rem}
+
+/* TWO columns even on a phone, which is not a taste call. The block's host section has its height
+   set by hand, ONCE for every screen, so a grid that collapsed 3 -> 1 made the page 989px on a
+   desktop and 2553px on a phone — the widest gap of any page here, and enough that the hand-set
+   1710px was clipping the phone render outright. Six cards over three rows lands within ~100px of
+   the desktop's two rows. Verify with scripts/measure_page_heights.py. */
+#fpl-venues .fpl-vens{
+  list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;align-items:start;
+}
+@media (min-width:700px){ #fpl-venues .fpl-vens{gap:14px} }
+@media (min-width:1000px){ #fpl-venues .fpl-vens{grid-template-columns:1fr 1fr 1fr} }
+
+#fpl-venues .ven{display:flex;flex-direction:column}
+/* min-height covers the taller FACE, measured with the constraint collapsed (see the note above);
+   the back needs the most room, so it sets the floor. */
+/* The FRONT sits in normal flow and therefore SETS the card height; the back overlays it.
+   That is deliberately not the leaderboard block's arrangement (both faces absolute + a hand-set
+   min-height), because the photo makes the front's height depend on the card's width — measured
+   285px at a 315px card and 321px at a 379px one. Any single min-height would be wrong at some
+   viewport. The min-height below is only a FLOOR so the shorter back can never be clipped. */
+#fpl-venues .card{
+  position:relative;width:100%;min-height:170px;padding:0;border:0;background:none;
+  color:inherit;font:inherit;text-align:left;cursor:pointer;
+  perspective:900px;-webkit-tap-highlight-color:transparent;
+}
+#fpl-venues .face{
+  display:flex;flex-direction:column;gap:6px;
+  padding:16px 18px;border-radius:14px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transition:transform .55s cubic-bezier(.2,.8,.3,1);
+}
+#fpl-venues .front{position:relative;transform:rotateY(0deg);min-height:inherit}
+#fpl-venues .back{
+  position:absolute;inset:0;transform:rotateY(180deg);
+  background:linear-gradient(160deg,#220d2a,#12061a);border-color:rgba(255,45,149,.5);
+}
+#fpl-venues .card.open .front{transform:rotateY(-180deg)}
+#fpl-venues .card.open .back{transform:rotateY(0deg)}
+#fpl-venues .card:focus-visible{outline:2px solid var(--fpl-cyan);outline-offset:3px;border-radius:14px}
+
+/* A fixed aspect box, so six photos of different shapes still line up as a grid and the card
+   height does not jump about per venue. object-fit crops rather than distorting a building. */
+#fpl-venues .vpic{
+  display:block;width:100%;aspect-ratio:16/9;border-radius:10px;
+  object-fit:cover;background:rgba(0,0,0,.35);
+}
+/* Placeholder for a venue whose photo we do not have yet: deliberately looks INTENDED, because a
+   half-populated page reads as broken and this page ships before the photo run. */
+#fpl-venues .vpic-none{
+  display:grid;place-items:center;
+  background:linear-gradient(140deg,rgba(255,45,149,.16),rgba(38,230,245,.10));
+  border:1px dashed rgba(255,255,255,.20);
+}
+#fpl-venues .vpic-none span{
+  font-weight:800;font-size:1.5rem;letter-spacing:.08em;color:rgba(246,239,226,.55);
+}
+#fpl-venues .vname{font-size:1.12rem;font-weight:800;color:#fff}
+#fpl-venues .vnight{
+  font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;
+  color:#06030a;background:var(--fpl-cyan);border-radius:999px;padding:3px 10px;align-self:flex-start;
+}
+#fpl-venues .vnew{
+  font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
+  color:#06030a;background:var(--fpl-gold);border-radius:999px;padding:3px 10px;align-self:flex-start;
+}
+#fpl-venues .vaddr{font-size:.95rem;color:var(--fpl-ink);line-height:1.5}
+#fpl-venues .vstat{font-size:.82rem;color:var(--fpl-dim)}
+#fpl-venues .vstat strong{color:var(--fpl-ink)}
+#fpl-venues .vcue{margin-top:auto;font-size:.74rem;color:var(--fpl-dim);font-style:italic}
+
+/* The site card (embed_maps): the front face's look without the flip. One column on a phone
+   because the map needs the width; the paste block's two-up phone grid was a section-height
+   measure that no longer applies here. */
+#fpl-venues .vcard{display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:14px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11)}
+#fpl-venues .vrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#fpl-venues .vcheck{font-size:.82rem;color:var(--fpl-dim)}
+#fpl-venues .vtime{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;
+  color:#06030a;background:var(--fpl-gold);border-radius:999px;padding:3px 10px}
+#fpl-venues.fpl-maps .fpl-vens{grid-template-columns:1fr}
+@media (min-width:700px){ #fpl-venues.fpl-maps .fpl-vens{grid-template-columns:1fr 1fr} }
+@media (min-width:1000px){ #fpl-venues.fpl-maps .fpl-vens{grid-template-columns:1fr 1fr 1fr} }
+/* The embedded map (site build only — see the markup note). Same radius as the card. */
+#fpl-venues .vmap{margin-top:8px;border-radius:14px;overflow:hidden;background:#15101b;
+  border:1px solid rgba(255,255,255,.12)}
+#fpl-venues .vmap iframe{display:block;width:100%;height:220px;border:0}
+
+/* The one link on the card, kept outside the flip button (see the markup note). */
+#fpl-venues .vgo{
+  display:block;margin-top:8px;padding:9px 14px;border-radius:999px;text-align:center;
+  font-size:.88rem;font-weight:700;text-decoration:none;
+  color:#06030a;background:var(--fpl-gold);
+}
+#fpl-venues .vgo:hover{filter:brightness(1.08)}
+#fpl-venues .vgo:focus-visible{outline:2px solid var(--fpl-cyan);outline-offset:2px}
+
+/* Two-up on a phone leaves each card ~174px wide, so the generous desktop padding is the last
+   thing costing height (and width the venue names need). Trimmed below the 2-column breakpoint
+   only — this closes the residual desktop/mobile gap rather than being a style preference. */
+@media (max-width:699px){
+  #fpl-venues .face{padding:12px 12px;gap:4px}
+  #fpl-venues .vname{font-size:1rem}
+  #fpl-venues .vgo{padding:8px 8px;font-size:.82rem}
+}
+
+@media (prefers-reduced-motion: reduce){
+  #fpl-venues .face{transition:none}
+}
+</style>
+
+<script>
+(function () {
+  var root = document.getElementById("fpl-venues");
+  if (!root) return;
+
+  // ⚠️ THE PASTED BLOCK RUNS INSIDE A SANDBOXED IFRAME on GoDaddy Websites + Marketing, and a
+  // plain target="_blank" is SILENTLY BLOCKED unless that sandbox carries allow-popups — the
+  // click simply does nothing, which is exactly how it was reported (Jason, 2026-08-02: "the
+  // google maps links don't seem to work from the godaddysite"). The URLs themselves are fine
+  // and work on our own site, so this is about the frame, not the link.
+  //
+  // ⚠️ A NEW TAB CANNOT WORK HERE, and that is not a guess — it is what the site reported
+  // (Jason, 2026-08-02): "www.google.com refused to connect. ERR_BLOCKED_BY_RESPONSE".
+  //
+  // GoDaddy's HTML section carries `allow-popups` but NOT `allow-popups-to-escape-sandbox`, so a
+  // window.open tab INHERITS the sandbox and is an opaque-origin document. Google sends
+  // X-Frame-Options and refuses to render in one. The tab opens — which is the trap, because the
+  // open "succeeded" — and then shows an error page. So window.open is not a fallback here, it is
+  // the failure.
+  //
+  // Navigating the TOP window instead produces an ordinary, unsandboxed page, which Google serves
+  // normally. It costs leaving the site, which for "Get directions" is the expected outcome
+  // anyway — and on a phone the maps.google.com link is a universal link, so it hands off to the
+  // Maps app without the site being lost at all. The anchor carries target="_top" so the browser
+  // does this natively even with scripting off; this handler only exists to notice when the
+  // sandbox forbids top navigation as well, and say so instead of looking broken.
+  //
+  // ⚠️ NEVER navigate THIS frame (window.location). Tried and rejected: under a bare
+  // `allow-scripts` sandbox it left the iframe on chrome-error:// — the league page destroyed,
+  // replaced by nothing. A dead button is bad; a blank section where the venues used to be is
+  // worse. The card back PRINTS the address, so nobody is stranded either way.
+  function openMaps(url) {
+    try {
+      if (window.top && window.top !== window) { window.top.location.href = url; return true; }
+    } catch (e) {
+      return false;                       // sandbox forbids top navigation
+    }
+    window.location.href = url;           // not framed at all: an ordinary link
+    return true;
+  }
+
+  // Nothing could take us to Maps. Say so on the card rather than looking broken, and select
+  // the address so a phone's copy handle lands in the right place.
+  function stranded(link) {
+    link.textContent = "Copy the address above";
+    var addr = link.parentNode.querySelector(".vaddr");
+    if (addr && window.getSelection && document.createRange) {
+      var r = document.createRange();
+      r.selectNodeContents(addr);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(r);
+    }
+  }
+
+  root.addEventListener("click", function (e) {
+    // "Get directions". It already sits OUTSIDE the flip button, so the card was never the
+    // problem — we intercept purely to get the sandbox fallbacks above, which the browser's
+    // native target="_blank" cannot do for us.
+    var link = e.target.closest("a[href]");
+    if (link && root.contains(link)) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (openMaps(link.href)) {
+        // Chrome does not always THROW when a sandbox forbids top navigation — sometimes it
+        // just logs and does nothing. So confirm by outcome: if we are still here and still
+        // visible a moment later, nothing happened.
+        //
+        // The cancels matter. On a phone the maps.google.com link is a universal link, so the
+        // Maps APP takes over without this document unloading — `visibilitychange` fires and we
+        // must NOT then tell somebody the button failed when it worked perfectly.
+        var settled = false;
+        var give_up = setTimeout(function () { if (!settled) { stranded(link); } }, 1400);
+        var cancel = function () { settled = true; clearTimeout(give_up); };
+        window.addEventListener("pagehide", cancel, {once: true});
+        document.addEventListener("visibilitychange", function vc() {
+          if (document.hidden) { cancel(); document.removeEventListener("visibilitychange", vc); }
+        });
+      } else {
+        stranded(link);
+      }
+      return;
+    }
+    var card = e.target.closest(".card");
+    if (!card || !root.contains(card)) return;
+    var open = card.classList.toggle("open");
+    card.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+})();
+</script>
+</main>
+</body>
+</html>

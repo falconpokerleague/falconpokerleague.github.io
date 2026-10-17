@@ -3,14 +3,320 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
 <title>Falcon Poker League</title>
+<meta name="description" content="Standings, results, schedule and venues for the Falcon Poker League.">
+<link rel="canonical" href="https://falconpokerleague.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Falcon Poker League">
+<meta property="og:title" content="Falcon Poker League">
+<meta property="og:description" content="Standings, results, schedule and venues for the Falcon Poker League.">
+<meta property="og:url" content="https://falconpokerleague.com/">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0410">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0410'/%3E%3Ctext x='50' y='74' font-size='68' text-anchor='middle' fill='%23ffc83d'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap">
 <style>
-html,body{margin:0;background:#0b0410;color:#f6efe2;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-main{min-height:100vh;display:grid;place-items:center;text-align:center;padding:24px}
-h1{margin:0 0 10px;font-size:clamp(1.8rem,7vw,3rem);color:#fff;text-shadow:0 0 14px rgba(255,45,149,.8)}
-p{margin:0;color:#b4a68f}
+:root{--void:#0b0410;--ink:#f6efe2;--dim:#b4a68f;--gold:#ffc83d}
+html{background:var(--void)}
+/* A block un-hides its optional parts by removing [hidden]; its own display rules must not
+   out-rank the attribute, or an empty 'Hand of the night' pill shows on a story-less night. */
+[hidden]{display:none!important}
+body{margin:0;background:var(--void);color:var(--ink);
+  font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+/* The typeface reaches into every block. The blocks set their own family on their root id, so
+   the override needs more weight than one id: html body #id beats #id. */
+html body #fpl-board, html body #fpl-schedule, html body #fpl-results, html body #fpl-venues,
+html body #fpl-home{font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+/* The display face on every big title: the neon glow the blocks already paint, in a marquee
+   letterform instead of a heavy sans. */
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1, html body #fpl-home .hm-title, .site-brand{
+  font-family:"Bebas Neue","Inter",Impact,sans-serif;font-weight:400;letter-spacing:.06em}
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1{font-size:clamp(2.4rem,8vw,3.6rem);line-height:1}
+html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
+.site-head{border-bottom:1px solid rgba(255,255,255,.08)}
+.site-bar{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;
+  gap:16px;flex-wrap:wrap}
+.site-brand{color:var(--ink);text-decoration:none;font-size:1.55rem;white-space:nowrap;line-height:1}
+.site-brand .spade{color:var(--gold);margin-right:6px}
+.site-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.site-nav a{color:var(--dim);text-decoration:none;padding:8px 12px;border-radius:999px;
+  font-size:.95rem;line-height:1.2;font-weight:600}
+.site-nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+.site-nav a[aria-current="page"]{color:var(--void);background:var(--gold);font-weight:700}
+.site-main{max-width:1040px;margin:0 auto;padding:16px 16px 40px}
+.site-404{text-align:center;padding:64px 16px}
+.site-404 h1{font-size:1.6rem;margin:0 0 12px}
+.site-404 a{color:var(--gold)}
+@media (max-width:600px){
+  .site-bar{padding:8px 12px;gap:8px}
+  .site-brand{font-size:1.35rem}
+  /* Five items do not fit a phone in one row at the desktop size; a single scrollable row
+     beats a second line, which pushed the page down and read as a broken header. */
+  .site-nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .site-nav::-webkit-scrollbar{display:none}
+  .site-nav a{padding:8px 9px;font-size:.84rem;white-space:nowrap}
+  .site-main{padding:12px 12px 28px}
+}
 </style>
 </head>
-<body><main><div><h1>Falcon Poker League</h1><p>Coming soon.</p></div></main></body>
+<body>
+<header class="site-head">
+  <div class="site-bar">
+    <a class="site-brand" href="/"><span class="spade">&spades;</span>Falcon Poker League</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/" aria-current="page">Home</a>
+      <a href="/leaderboard/">Leaderboard</a>
+      <a href="/schedule/">Schedule</a>
+      <a href="/results/">Recent games</a>
+      <a href="/venues/">Venues</a>
+    </nav>
+  </div>
+</header>
+<main class="site-main">
+<!--
+  FALCON POKER LEAGUE — the home page of falconpokerleague.com (site only; build_site.py).
+
+  One self-contained block, the same way every league page is built: static markup and a script
+  that reads the three public feeds on every view, so the page is current without a rebuild.
+  Each panel fetches its own feed and fails on its own, so a feed that is down costs one panel,
+  not the page. Nothing is loaded from outside except the feeds themselves.
+
+  Panels: the next game (schedule.json), the top ten (board.json), the last night (results.json)
+  and the nights ahead (schedule.json). Saturday games are at noon, so "today" wording follows
+  the feed's `start` field rather than assuming every game is an evening.
+-->
+<div id="fpl-home"
+     data-board="https://fpl.glortvc.cc/board.json"
+     data-schedule="https://fpl.glortvc.cc/schedule.json"
+     data-results="https://fpl.glortvc.cc/results.json">
+
+  <section class="hm-hero">
+    <h1 class="hm-title">Falcon Poker League</h1>
+    <p class="hm-sub" id="hm-season">&nbsp;</p>
+  </section>
+
+  <section class="hm-next" id="hm-next" aria-live="polite">
+    <p class="hm-label">Next game</p>
+    <p class="hm-big" id="hm-next-big">Loading the schedule&hellip;</p>
+    <p class="hm-small" id="hm-next-small"></p>
+    <p class="hm-then" id="hm-then"></p>
+    <p class="hm-links"><a href="/schedule/">Full schedule &rarr;</a> <a href="/venues/">Venues &amp; maps &rarr;</a></p>
+  </section>
+
+  <div class="hm-grid">
+    <section class="hm-panel">
+      <p class="hm-label">Top five</p>
+      <ol class="hm-top" id="hm-top"></ol>
+      <p class="hm-note" id="hm-top-note" hidden></p>
+      <p class="hm-links"><a href="/leaderboard/">Full leaderboard &rarr;</a></p>
+    </section>
+
+    <section class="hm-panel">
+      <p class="hm-label" id="hm-last-label">Last game</p>
+      <p class="hm-when" id="hm-last-when"></p>
+      <ol class="hm-podium" id="hm-last"></ol>
+      <p class="hm-note" id="hm-last-note" hidden></p>
+      <p class="hm-links"><a href="/results/">All results &rarr;</a></p>
+    </section>
+  </div>
+</div>
+
+<style>
+#fpl-home{
+  --fpl-void:#0b0410; --fpl-ink:#f6efe2; --fpl-dim:#b4a68f;
+  --fpl-pink:#ff2d95; --fpl-cyan:#26e6f5; --fpl-gold:#ffc83d;
+  --fpl-t1:#22c55e; --fpl-t2:#3b82f6; --fpl-t3:#22d3ee; --fpl-t4:#f87171; --fpl-t5:#a78bfa;
+  color:var(--fpl-ink);
+  font-family:"Segoe UI",Roboto,-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  line-height:1.45;
+  /* A narrower column than the other pages: two five-row panels stretched across 1040px read
+     as empty boxes (Jason, 2026-10-17: "the boxes are too wide now and waste space"). */
+  max-width:760px;margin:0 auto;
+}
+#fpl-home *{box-sizing:border-box}
+#fpl-home a{color:var(--fpl-cyan);text-decoration:none}
+#fpl-home a:hover{text-decoration:underline}
+
+#fpl-home .hm-hero{
+  text-align:center;padding:26px 16px 20px;border-radius:18px;
+  background:radial-gradient(900px 420px at 20% -10%, #2a0b33 0%, transparent 60%),
+             radial-gradient(700px 380px at 90% 10%, #06303a 0%, transparent 55%),
+             rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+}
+#fpl-home .hm-kicker{margin:0 0 6px;color:var(--fpl-gold);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase}
+#fpl-home .hm-title{
+  margin:0;font-size:clamp(2.2rem,8vw,4.2rem);font-weight:800;letter-spacing:.02em;line-height:1;
+  color:#fff;text-shadow:0 0 14px rgba(255,45,149,.8),0 0 40px rgba(255,45,149,.35);
+}
+#fpl-home .hm-sub{margin:12px 0 0;color:var(--fpl-dim);font-size:1rem}
+
+#fpl-home .hm-next{
+  margin:14px 0 0;padding:18px 20px;border-radius:16px;
+  background:linear-gradient(120deg,rgba(255,200,61,.14),rgba(255,45,149,.10));
+  border:1px solid rgba(255,200,61,.45);
+}
+#fpl-home .hm-label{margin:0 0 6px;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fpl-gold);font-weight:800}
+#fpl-home .hm-big{margin:0;font-size:clamp(1.3rem,4.6vw,2rem);font-weight:800;color:#fff;line-height:1.15}
+#fpl-home .hm-small{margin:4px 0 0;color:var(--fpl-dim)}
+#fpl-home .hm-small .dbl{
+  display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;
+  font-size:.74rem;font-weight:800;letter-spacing:.08em;color:#06030a;background:var(--fpl-gold);
+}
+#fpl-home .hm-then{margin:10px 0 0;color:var(--fpl-dim);font-size:.92rem;line-height:1.6}
+/* One game per line, so a venue name never breaks across lines on a phone. */
+#fpl-home .hm-then .ln{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#fpl-home .hm-then b{color:var(--fpl-ink);font-weight:600;display:inline-block;min-width:4.2em}
+#fpl-home .hm-then .t{color:var(--fpl-gold);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+#fpl-home .hm-links{margin:12px 0 0;display:flex;gap:18px;flex-wrap:wrap;font-weight:600}
+
+#fpl-home .hm-grid{margin:14px 0 0;display:grid;gap:14px}
+@media (min-width:820px){ #fpl-home .hm-grid{grid-template-columns:1fr 1fr;gap:18px} }
+#fpl-home .hm-panel{
+  padding:18px 20px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+}
+#fpl-home .hm-note{margin:6px 0 0;color:var(--fpl-dim);font-style:italic;font-size:.9rem}
+#fpl-home .hm-note[hidden]{display:none}
+
+#fpl-home .hm-top{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+#fpl-home .hm-top li{
+  display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;
+  padding:7px 10px;border-radius:10px;background:rgba(0,0,0,.28);
+  border-left:3px solid var(--fpl-cc,var(--fpl-dim));
+}
+#fpl-home .hm-rank{font-weight:800;color:var(--fpl-cc,var(--fpl-dim))}
+#fpl-home .hm-name{font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#fpl-home .hm-pts{font-weight:800;color:var(--fpl-gold);font-variant-numeric:tabular-nums}
+
+#fpl-home .hm-when{margin:0 0 10px;color:#fff;font-weight:700}
+#fpl-home .hm-when small{display:block;color:var(--fpl-dim);font-weight:400}
+#fpl-home .hm-podium{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+#fpl-home .hm-podium li{
+  display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:center;
+  padding:7px 10px;border-radius:10px;background:rgba(0,0,0,.28);
+}
+#fpl-home .hm-place{
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-weight:800;font-size:.8rem;color:#06030a;background:var(--fpl-dim);
+}
+#fpl-home .p1 .hm-place{background:var(--fpl-gold)}
+#fpl-home .p2 .hm-place{background:#cfd8dc}
+#fpl-home .p3 .hm-place{background:#c98b5e}
+#fpl-home .p1{background:linear-gradient(120deg,rgba(255,200,61,.16),rgba(0,0,0,.28))}
+
+</style>
+
+<script>
+(function () {
+  var root = document.getElementById("fpl-home");
+  if (!root || !window.fetch) return;
+  var TIER_COLOR = { 1: "#22c55e", 2: "#3b82f6", 3: "#22d3ee", 4: "#f87171", 5: "#a78bfa" };
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function num(n) { return Number(n || 0).toLocaleString("en-US"); }
+  function get(url) {
+    return fetch(url, { cache: "no-cache" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    });
+  }
+  function say(id, msg) {
+    var n = document.getElementById(id);
+    n.textContent = msg;
+    n.hidden = false;
+  }
+
+  // ---- the next game + the nights ahead (schedule.json)
+  get(root.getAttribute("data-schedule")).then(function (s) {
+    var nights = s.nights || [];
+    var big = document.getElementById("hm-next-big");
+    var small = document.getElementById("hm-next-small");
+    var today = null, next = null;
+    nights.forEach(function (n) {
+      if (n.is_today && !today) today = n;
+      else if (!n.is_today && !next) next = n;
+    });
+    var n = today || next;
+    if (!n) {
+      big.textContent = "No games on the calendar just now.";
+    } else {
+      // "Tonight at 6:00 PM", "Today at noon", or "Monday Oct 19, 5:45 PM" for a later game.
+      var at = n.start ? (/^[A-Za-z]+$/.test(n.start) ? n.start.toLowerCase() : n.start) : "";
+      var when = today ? (at ? (n.start === "Noon" ? "Today at " : "Tonight at ") + at : "Tonight")
+                       : n.weekday + " " + n.day + (at ? ", " + at : "");
+      big.textContent = when + " · " + n.venue;
+      var bits = [];
+      if (n.check_in) bits.push("Check-in by " + n.check_in);
+      if (n.reasons && n.reasons.length) bits.push(n.reasons.join(" · "));
+      small.textContent = bits.join(" · ");
+      if (n.multiplier > 1) small.appendChild(el("span", "dbl", n.multiplier === 2 ? "Double points" : n.multiplier === 3 ? "Triple points" : "×" + n.multiplier + " points"));
+    }
+    // Then the three games after it, on one line: enough to plan the week without a list.
+    var then = document.getElementById("hm-then");
+    var ahead = nights.filter(function (x) { return x !== n; }).slice(0, 3);
+    if (ahead.length) {
+      ahead.forEach(function (x, i) {
+        var ln = el("span", "ln");
+        ln.appendChild(el("b", null, x.weekday.slice(0, 3) + " " + x.day.replace(/^\w+ /, "")));
+        ln.appendChild(document.createTextNode(" " + x.venue));
+        if (x.start) { ln.appendChild(document.createTextNode(" ")); ln.appendChild(el("span", "t", x.start)); }
+        if (x.multiplier > 1) { ln.appendChild(document.createTextNode(" ")); ln.appendChild(el("span", "t", x.multiplier === 2 ? "Double points" : x.multiplier === 3 ? "Triple points" : "×" + x.multiplier)); }
+        then.appendChild(ln);
+      });
+    }
+  }).catch(function () {
+    document.getElementById("hm-next-big").textContent = "The schedule could not be loaded just now.";
+  });
+
+  // ---- the top ten (board.json)
+  get(root.getAttribute("data-board")).then(function (b) {
+    document.getElementById("hm-season").textContent =
+      (b.season_label || "") + (b.game_count ? " · through game " + b.game_count : "");
+    var players = (b.players || []).slice(0, 5);
+    if (!players.length) { say("hm-top-note", "Standings appear after the first game of the season."); return; }
+    var list = document.getElementById("hm-top");
+    players.forEach(function (p) {
+      var li = el("li");
+      li.style.setProperty("--fpl-cc", TIER_COLOR[p.tier] || TIER_COLOR[4]);
+      li.appendChild(el("span", "hm-rank", String(p.rank)));
+      li.appendChild(el("span", "hm-name", p.name));
+      li.appendChild(el("span", "hm-pts", num(Math.round(p.total))));
+      list.appendChild(li);
+    });
+  }).catch(function () { say("hm-top-note", "The standings could not be loaded just now."); });
+
+  // ---- the last game (results.json)
+  get(root.getAttribute("data-results")).then(function (r) {
+    var games = (r.games || []).filter(function (g) { return !g.cancelled; });
+    var g = games[0];
+    if (!g) { say("hm-last-note", "No results yet this season."); return; }
+    var when = document.getElementById("hm-last-when");
+    when.textContent = g.venue || "";
+    when.appendChild(el("small", null, (g.when || "") + (g.players ? " · " + g.players + " players" : "")));
+    var list = document.getElementById("hm-last");
+    (g.podium || []).slice(0, 3).forEach(function (p) {
+      var li = el("li", "p" + p.place);
+      li.appendChild(el("span", "hm-place", String(p.place)));
+      li.appendChild(el("span", null, p.name));
+      list.appendChild(li);
+    });
+    if (!(g.podium || []).length) say("hm-last-note", "Results still being entered.");
+  }).catch(function () { say("hm-last-note", "Results could not be loaded just now."); });
+})();
+</script>
+
+</main>
+</body>
 </html>

@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recent games · Falcon Poker League</title>
+<meta name="description" content="How the last few nights finished.">
+<link rel="canonical" href="https://falconpokerleague.com/results/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Falcon Poker League">
+<meta property="og:title" content="Recent games · Falcon Poker League">
+<meta property="og:description" content="How the last few nights finished.">
+<meta property="og:url" content="https://falconpokerleague.com/results/">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0410">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0410'/%3E%3Ctext x='50' y='74' font-size='68' text-anchor='middle' fill='%23ffc83d'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+:root{--void:#0b0410;--ink:#f6efe2;--dim:#b4a68f;--gold:#ffc83d}
+html{background:var(--void)}
+/* A block un-hides its optional parts by removing [hidden]; its own display rules must not
+   out-rank the attribute, or an empty 'Hand of the night' pill shows on a story-less night. */
+[hidden]{display:none!important}
+body{margin:0;background:var(--void);color:var(--ink);
+  font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+/* The typeface reaches into every block. The blocks set their own family on their root id, so
+   the override needs more weight than one id: html body #id beats #id. */
+html body #fpl-board, html body #fpl-schedule, html body #fpl-results, html body #fpl-venues,
+html body #fpl-home{font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+/* The display face on every big title: the neon glow the blocks already paint, in a marquee
+   letterform instead of a heavy sans. */
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1, html body #fpl-home .hm-title, .site-brand{
+  font-family:"Bebas Neue","Inter",Impact,sans-serif;font-weight:400;letter-spacing:.06em}
+html body #fpl-board .fpl-title, html body #fpl-schedule .fpl-h1, html body #fpl-results .fpl-h1,
+html body #fpl-venues .fpl-h1{font-size:clamp(2.4rem,8vw,3.6rem);line-height:1}
+html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
+.site-head{border-bottom:1px solid rgba(255,255,255,.08)}
+.site-bar{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;
+  gap:16px;flex-wrap:wrap}
+.site-brand{color:var(--ink);text-decoration:none;font-size:1.55rem;white-space:nowrap;line-height:1}
+.site-brand .spade{color:var(--gold);margin-right:6px}
+.site-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.site-nav a{color:var(--dim);text-decoration:none;padding:8px 12px;border-radius:999px;
+  font-size:.95rem;line-height:1.2;font-weight:600}
+.site-nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+.site-nav a[aria-current="page"]{color:var(--void);background:var(--gold);font-weight:700}
+.site-main{max-width:1040px;margin:0 auto;padding:16px 16px 40px}
+.site-404{text-align:center;padding:64px 16px}
+.site-404 h1{font-size:1.6rem;margin:0 0 12px}
+.site-404 a{color:var(--gold)}
+@media (max-width:600px){
+  .site-bar{padding:8px 12px;gap:8px}
+  .site-brand{font-size:1.35rem}
+  /* Five items do not fit a phone in one row at the desktop size; a single scrollable row
+     beats a second line, which pushed the page down and read as a broken header. */
+  .site-nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .site-nav::-webkit-scrollbar{display:none}
+  .site-nav a{padding:8px 9px;font-size:.84rem;white-space:nowrap}
+  .site-main{padding:12px 12px 28px}
+}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-bar">
+    <a class="site-brand" href="/"><span class="spade">&spades;</span>Falcon Poker League</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/leaderboard/">Leaderboard</a>
+      <a href="/schedule/">Schedule</a>
+      <a href="/results/" aria-current="page">Recent games</a>
+      <a href="/venues/">Venues</a>
+    </nav>
+  </div>
+</header>
+<main class="site-main">
+
+<div id="fpl-results" data-full="1" class="fpl-res" data-feed="https://fpl.glortvc.cc/results.json">
+  <div class="fpl-inner">
+    <header class="fpl-top">
+      <h2 class="fpl-h1">Falcon Poker League</h2>
+      <p class="fpl-sub">Loading recent games&hellip;</p>
+    </header>
+
+    <ol class="fpl-games"></ol>
+    <p class="fpl-empty" hidden>No games recorded yet this season.</p>
+  </div>
+</div>
+
+<style>
+#fpl-results{
+  --fpl-void:#0b0410; --fpl-ink:#f6efe2; --fpl-dim:#b4a68f;
+  --fpl-pink:#ff2d95; --fpl-cyan:#26e6f5; --fpl-gold:#ffc83d;
+  background:radial-gradient(1200px 600px at 20% -10%, #2a0b33 0%, transparent 60%),
+             radial-gradient(900px 500px at 90% 10%, #06303a 0%, transparent 55%),
+             var(--fpl-void);
+  color:var(--fpl-ink);
+  padding:26px 14px 34px;
+  border-radius:16px;
+  font-family:"Segoe UI",Roboto,-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  line-height:1.45;
+  overflow:hidden;
+}
+#fpl-results *{box-sizing:border-box}
+#fpl-results .fpl-inner{max-width:1000px;margin:0 auto}
+
+#fpl-results .fpl-top{text-align:center;margin:0 0 6px}
+#fpl-results .fpl-h1{
+  margin:0;font-size:clamp(1.6rem,6vw,2.6rem);font-weight:800;letter-spacing:.02em;
+  color:#fff;text-shadow:0 0 12px rgba(255,45,149,.75),0 0 34px rgba(255,45,149,.35);
+}
+#fpl-results .fpl-sub{margin:6px 0 0;color:var(--fpl-gold);font-size:.95rem;letter-spacing:.06em}
+#fpl-results .fpl-empty{margin:30px 0;color:var(--fpl-dim);text-align:center}
+
+#fpl-results .fpl-games{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:14px}
+
+/* ⚠️ THE STORY IS AN OVERLAY, NOT PART OF THE CARD — and that is a height decision, not a
+   styling one. The GoDaddy section height is hand-set ONCE for every screen, so a page is only
+   shippable if its desktop and mobile renders converge. The obvious build (flip card, story on
+   the back, both faces in one grid cell so the card is as tall as its taller face) MEASURED at
+   3071 desktop / 4060 mobile — 989px apart, because the same 90-word story wraps to roughly
+   twice as many lines at 390px as at 1280px, and on the short one-table nights it is the back
+   that sets the card height. No single section height fits both.
+   Lifting the story out of the flow makes the page measure IDENTICALLY with and without
+   stories: the cards carry only the podium, which wraps the same at both widths. Run
+   scripts/measure_page_heights.py after touching any of this. */
+#fpl-results .game{
+  padding:16px 18px;border-radius:14px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+}
+#fpl-results .game.has-story{cursor:pointer}
+#fpl-results .game.has-story:hover{border-color:rgba(255,45,149,.45)}
+#fpl-results .game:focus-visible{outline:2px solid var(--fpl-cyan);outline-offset:2px}
+
+#fpl-results .gtop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+#fpl-results .gvenue{font-size:1.15rem;font-weight:700;color:#fff}
+#fpl-results .gwhen{color:var(--fpl-dim);font-size:.85rem}
+#fpl-results .gmeta{margin-top:2px;color:var(--fpl-dim);font-size:.85rem}
+#fpl-results .chip{
+  display:inline-block;font-weight:800;font-size:.78rem;padding:4px 10px;border-radius:999px;
+  background:rgba(255,255,255,.07);color:var(--fpl-dim);margin-left:8px;
+}
+#fpl-results .chip.dbl{background:var(--fpl-gold);color:#06030a}
+#fpl-results .chip.tale{background:rgba(255,45,149,.18);color:#ff8ec4;margin-left:0;margin-top:10px}
+
+#fpl-results .podium{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+#fpl-results .spot{
+  display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;
+  padding:9px 12px;border-radius:10px;background:rgba(0,0,0,.28);
+}
+#fpl-results .place{
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-weight:800;font-size:.8rem;color:#06030a;background:var(--fpl-dim);
+}
+#fpl-results .spot.p1 .place{background:var(--fpl-gold)}
+#fpl-results .spot.p2 .place{background:#cfd8dc}
+#fpl-results .spot.p3 .place{background:#c98b5e}
+#fpl-results .spot.p1{background:linear-gradient(120deg,rgba(255,200,61,.16),rgba(0,0,0,.28))}
+#fpl-results .who{font-weight:600;color:var(--fpl-ink)}
+#fpl-results .spot.p1 .who{color:#fff}
+#fpl-results .none{margin:12px 0 0;color:var(--fpl-dim);font-size:.9rem;font-style:italic}
+/* The full finishing order (site only): two columns from tablet width up, places past the
+   podium drawn quieter so the top of the night still reads first. */
+#fpl-results .podium.full{gap:6px}
+@media (min-width:700px){ #fpl-results .podium.full{grid-template-columns:1fr 1fr} }
+#fpl-results .podium.full .spot{padding:7px 10px}
+#fpl-results .podium.full .spot:not(.p1):not(.p2):not(.p3){background:rgba(0,0,0,.16)}
+#fpl-results .podium.full .spot:not(.p1):not(.p2):not(.p3) .place{background:rgba(255,255,255,.12);color:var(--fpl-dim)}
+
+/* --- the story overlay ---
+   ⚠️ ABSOLUTE, not FIXED, and anchored to the card that was tapped.
+   `position:fixed` was the obvious choice and it is WRONG inside a GoDaddy section. The block
+   is served in an iframe whose box is the whole hand-set section — 2870px tall — so `fixed`
+   resolves against THAT, not against the visible window. The panel centred itself ~1400px down
+   the section, nowhere near the tap (Jason, 2026-08-02: "the story popup also was far down the
+   page and not where I clicked"). We cannot read the parent's scroll position either; it is
+   cross-origin. So the panel is positioned within the block, level with the card that opened it,
+   and clamped by script so it always lands fully inside. Being out of flow it still costs the
+   page no height, which was the whole point of lifting it out. */
+#fpl-results{position:relative}
+#fpl-results .sveil{
+  position:absolute;inset:0;z-index:2147483000;
+  background:rgba(4,2,8,.82);
+}
+#fpl-results .sveil[hidden]{display:none}
+#fpl-results .spanel{
+  position:absolute;left:50%;transform:translateX(-50%);
+  width:min(640px,calc(100% - 28px));max-height:calc(100% - 24px);overflow:auto;
+  padding:22px 22px 26px;border-radius:16px;
+  background:linear-gradient(160deg,#1b0a24,#0b0410 60%);
+  border:1px solid rgba(255,45,149,.35);
+  box-shadow:0 24px 70px rgba(0,0,0,.6);
+  text-align:left;
+}
+#fpl-results .sshut{
+  position:absolute;top:10px;right:12px;width:32px;height:32px;
+  background:none;border:0;color:var(--fpl-dim);font-size:1.5rem;line-height:1;cursor:pointer;
+  border-radius:8px;
+}
+#fpl-results .sshut:hover{color:#fff;background:rgba(255,255,255,.08)}
+#fpl-results .swhere{margin:0 34px 0 0;color:var(--fpl-gold);font-size:.8rem;letter-spacing:.06em}
+#fpl-results .shead{margin:6px 34px 0 0;font-size:1.25rem;font-weight:800;color:#fff;
+  text-shadow:0 0 10px rgba(38,230,245,.5)}
+#fpl-results .scards{display:flex;gap:6px;margin:10px 0 0;padding:0;list-style:none;flex-wrap:wrap}
+#fpl-results .scard{
+  min-width:26px;height:34px;padding:0 6px;border-radius:5px;background:#f6efe2;color:#101018;
+  display:grid;place-items:center;font-weight:800;font-size:.9rem;
+}
+#fpl-results .scard.red{color:#c1121f}
+/* A hole card named INSIDE the prose ("Erik M looked down at K♠ Q♠"), drawn as a small card
+   rather than left as a glyph in the sentence. Inline-block with a baseline nudge so it sits in
+   the line without changing line-height — the section height is hand-set in the owner's builder
+   and prose that grows a row costs him a re-paste. */
+#fpl-results .icard{
+  display:inline-block;min-width:15px;padding:1px 4px;margin:0 1px;border-radius:3px;
+  background:#f6efe2;color:#101018;font-weight:800;font-size:.82em;line-height:1.15;
+  vertical-align:baseline;
+}
+#fpl-results .icard.red{color:#c1121f}
+#fpl-results .sbody{margin:12px 0 0;color:var(--fpl-ink);font-size:.92rem;line-height:1.65}
+#fpl-results .sbody p{margin:0 0 9px}
+#fpl-results .sbody p:last-child{margin-bottom:0}
+#fpl-results .sback{margin:12px 0 0;color:var(--fpl-dim);font-size:.78rem;font-style:italic}
+
+@media (prefers-reduced-motion: reduce){
+  #fpl-results .face{transition:none}
+}
+</style>
+
+<script>
+(function () {
+  "use strict";
+  var root = document.getElementById("fpl-results");
+  if (!root) { return; }
+  var FEED  = root.getAttribute("data-feed");
+  var FULL  = root.getAttribute("data-full") === "1";
+  // Scoped to the block by CLASS, not looked up by id on the document. build_paste_blocks.py
+  // rewrites the root id so several blocks can share one of the owner's pages; anything found
+  // by a global id would either dangle after that rewrite or collide with a second block.
+  var list  = root.querySelector(".fpl-games");
+  var sub   = root.querySelector(".fpl-sub");
+  var empty = root.querySelector(".fpl-empty");
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) { n.className = cls; }
+    if (text !== undefined && text !== null) { n.textContent = String(text); }
+    return n;
+  }
+
+  /* CARD_RE / cardedPara — turn "K♠" written in the prose into a small drawn card.
+     The story names hole cards in the sentence ("Erik M looked down at K♠ Q♠") because the strip
+     beside it is the BOARD and nothing else: a flat row of seven cards with no marker for where
+     the board ends gets read board-first, which is how G:24 shipped a picture that argued with
+     its own words (2026-08-05). A rank followed by a suit glyph is distinctive enough to match
+     safely — nothing else in the prose looks like it — and textContent is used throughout, so no
+     story text is ever parsed as HTML. */
+  var CARD_RE = /(10|[2-9AKQJT])\s?([♠♥♦♣])/g;
+
+  function cardedPara(text) {
+    var p = el("p"), last = 0, m;
+    CARD_RE.lastIndex = 0;
+    while ((m = CARD_RE.exec(text)) !== null) {
+      if (m.index > last) { p.appendChild(document.createTextNode(text.slice(last, m.index))); }
+      var red = m[2] === "♥" || m[2] === "♦";
+      p.appendChild(el("span", "icard" + (red ? " red" : ""), m[1] + m[2]));
+      last = CARD_RE.lastIndex;
+    }
+    if (last < text.length) { p.appendChild(document.createTextNode(text.slice(last))); }
+    return p;
+  }
+
+  function fail(msg) {
+    sub.textContent = msg;
+    if (empty) { empty.hidden = true; }
+  }
+
+  // The card: venue, when, the night's meta chips, and the podium. This is ALL of the page's
+  // height — the story lives in the overlay below.
+  function front(g) {
+    var f = document.createDocumentFragment();
+    var top = el("div", "gtop");
+    top.appendChild(el("span", "gvenue", g.venue || ""));
+    top.appendChild(el("span", "gwhen", g.when || ""));
+    f.appendChild(top);
+
+    var meta = el("div", "gmeta", g.game_id || "");
+    if (g.players) { meta.appendChild(document.createTextNode(" · " + g.players + " players")); }
+    if (g.multiplier > 1) { meta.appendChild(el("span", "chip dbl", "×" + g.multiplier + " points")); }
+    if (g.finals) { meta.appendChild(el("span", "chip", "Season final")); }
+    f.appendChild(meta);
+
+    if (g.cancelled) {
+      f.appendChild(el("p", "none",
+        "Called off — too few players. Everyone who turned up still got their points for the night."));
+    } else if ((FULL && g.finishers && g.finishers.length) || (g.podium && g.podium.length)) {
+      // The GoDaddy block shows the podium (2*tables+1 places). The site (data-full="1")
+      // has no section to overflow, so it lists the whole finishing order when the feed
+      // carries it; an older feed without `finishers` falls back to the podium.
+      var places = (FULL && g.finishers && g.finishers.length) ? g.finishers : g.podium;
+      var ol = el("ol", "podium" + (places === g.finishers ? " full" : ""));
+      places.forEach(function (p) {
+        var li = el("li", "spot p" + p.place);
+        li.appendChild(el("span", "place", p.place));
+        li.appendChild(el("span", "who", p.name));
+        ol.appendChild(li);
+      });
+      f.appendChild(ol);
+    } else {
+      f.appendChild(el("p", "none", "Results still being entered."));
+    }
+
+    if (g.story) { f.appendChild(el("span", "chip tale", "Read the story →")); }
+    return f;
+  }
+
+  // --- the story overlay: ONE panel, reused for every night, appended outside the card list
+  // so it contributes nothing to the block's measured height.
+  var veil = el("div", "sveil");
+  veil.hidden = true;
+  var panel = el("div", "spanel");
+  var shut = el("button", "sshut", "×");
+  shut.setAttribute("aria-label", "Close");
+  veil.appendChild(panel);
+  root.appendChild(veil);
+  var opener = null;   // the card that opened it, so focus can go back where it came from
+
+  function closeStory() {
+    veil.hidden = true;
+    if (opener && opener.focus) { opener.focus(); }
+    opener = null;
+  }
+
+  function openStory(g, from) {
+    opener = from || null;
+    panel.innerHTML = "";
+    panel.appendChild(shut);
+    panel.appendChild(el("p", "swhere", (g.venue || "") + " · " + (g.when || "")));
+    panel.appendChild(el("h3", "shead", g.story.headline));
+    if (g.story.cards && g.story.cards.length) {
+      var ul = el("ul", "scards");
+      g.story.cards.forEach(function (c) {
+        var red = /[♥♦]/.test(String(c));
+        ul.appendChild(el("li", "scard" + (red ? " red" : ""), c));
+      });
+      panel.appendChild(ul);
+    }
+    var body = el("div", "sbody");
+    String(g.story.body).split(/\n\s*\n/).forEach(function (para) {
+      if (para.trim()) { body.appendChild(cardedPara(para.trim())); }
+    });
+    panel.appendChild(body);
+    panel.appendChild(el("p", "sback",
+      "The finishing order is real. The hand is not — nobody writes down the cards."));
+    // Show it first, then place it — the panel's height is not knowable until it has content
+    // and is laid out.
+    veil.hidden = false;
+    panel.style.top = "0px";
+    panel.scrollTop = 0;
+
+    // Level with the card that was tapped, clamped so the whole panel stays inside the block.
+    // `offsetTop` is relative to #fpl-results (the only positioned ancestor), and the veil sits at
+    // inset:0 of it, so the two share an origin.
+    var blockH = root.clientHeight;
+    var panelH = panel.offsetHeight;
+    var want = from && from.offsetTop ? from.offsetTop : 0;
+    panel.style.top = Math.max(12, Math.min(want, blockH - panelH - 12)) + "px";
+    shut.focus();
+  }
+
+  shut.addEventListener("click", function (e) { e.stopPropagation(); closeStory(); });
+  veil.addEventListener("click", function (e) { if (e.target === veil) { closeStory(); } });
+  document.addEventListener("keydown", function (e) {
+    if (!veil.hidden && (e.key === "Escape" || e.key === "Esc")) { closeStory(); }
+  });
+
+  function card(g) {
+    var li = el("li", "game" + (g.story ? " has-story" : ""));
+    li.appendChild(front(g));
+    if (g.story) {
+      li.addEventListener("click", function () { openStory(g, li); });
+      // Reachable without a mouse: the card is the control, so it takes focus and
+      // answers Enter/Space like a button would.
+      li.tabIndex = 0;
+      li.setAttribute("role", "button");
+      li.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openStory(g, li); }
+      });
+    }
+    return li;
+  }
+
+  function build(payload) {
+    var games = payload.games || [];
+    sub.textContent = "Recent games · " + (payload.season_label || "");
+    list.innerHTML = "";
+    if (!games.length) {
+      if (empty) { empty.hidden = false; }
+      return;
+    }
+    if (empty) { empty.hidden = true; }
+    games.forEach(function (g) { list.appendChild(card(g)); });
+  }
+
+  try {
+    fetch(FEED, { cache: "no-cache" })
+      .then(function (r) {
+        if (!r.ok) { throw new Error(r.status); }
+        return r.json();
+      })
+      .then(build)
+      .catch(function () {
+        fail("Recent games are briefly unavailable — please check back shortly.");
+      });
+  } catch (e) {
+    fail("Recent games are briefly unavailable — please check back shortly.");
+  }
+})();
+</script>
+</main>
+</body>
+</html>
