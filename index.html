@@ -240,7 +240,9 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 
   // ---- the next game + the nights ahead (schedule.json)
   get(root.getAttribute("data-schedule")).then(function (s) {
-    var nights = s.nights || [];
+    // A night marked played is finished and on the boards, so it is no longer "next" even if
+    // it is today: the line moves on with the results, not at midnight.
+    var nights = (s.nights || []).filter(function (x) { return !x.played; });
     var big = document.getElementById("hm-next-big");
     var small = document.getElementById("hm-next-small");
     var today = null, next = null;
