@@ -52,6 +52,19 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 .site-404{text-align:center;padding:64px 16px}
 .site-404 h1{font-size:1.6rem;margin:0 0 12px}
 .site-404 a{color:var(--gold)}
+/* The contact footer: one quiet strip under every page. Each item is a title with its own
+   address directly beneath it (Jason, 2026-10-22), two columns on a desktop and one per row on a
+   phone; the address can be copied when a phone has no mail app wired to mailto. */
+.site-foot{border-top:1px solid rgba(255,255,255,.08);margin-top:8px}
+.site-foot-in{max-width:1040px;margin:0 auto;padding:18px 16px 28px}
+.site-foot-label{margin:0 0 10px;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);font-weight:800}
+.site-foot-items{display:flex;gap:16px 40px;flex-wrap:wrap}
+.site-foot-item{display:flex;flex-direction:column;gap:2px;min-width:0}
+.site-foot-item a{color:#26e6f5;text-decoration:none;font-weight:600}
+.site-foot-item a:hover{text-decoration:underline}
+.site-foot-addr{color:var(--dim);font-size:.9rem;word-break:break-word}
+@media (max-width:600px){ .site-foot-items{flex-direction:column} }
 @media (max-width:600px){
   .site-bar{padding:8px 12px;gap:8px}
   .site-brand{font-size:1.35rem}
@@ -354,5 +367,20 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 </script>
 
 </main>
+<footer class="site-foot">
+  <div class="site-foot-in">
+    <p class="site-foot-label">Contact</p>
+    <div class="site-foot-items">
+      <div class="site-foot-item">
+        <a href="mailto:owner@falconpokerleague.com">Reach the league owner</a>
+        <span class="site-foot-addr">owner@falconpokerleague.com</span>
+      </div>
+      <div class="site-foot-item">
+        <a href="mailto:website@falconpokerleague.com?subject=Website%20issue">Report a website problem</a>
+        <span class="site-foot-addr">website@falconpokerleague.com</span>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
