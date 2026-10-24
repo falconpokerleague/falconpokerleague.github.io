@@ -199,11 +199,20 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
   display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;
   font-size:.74rem;font-weight:800;letter-spacing:.08em;color:#06030a;background:var(--fpl-gold);
 }
+/* The owner's named game for the night (schedule.json `event`): an outlined pink pill next to the
+   solid gold points pill, so "Double points" and "Ducky Game" read as two different things. */
+#fpl-home .hm-small .ev{
+  display:inline-block;margin-left:8px;padding:1px 9px;border-radius:999px;
+  font-size:.74rem;font-weight:800;letter-spacing:.08em;color:var(--fpl-pink);border:1px solid var(--fpl-pink);
+}
 #fpl-home .hm-then{margin:10px 0 0;color:var(--fpl-dim);font-size:.92rem;line-height:1.6}
 /* One game per line, so a venue name never breaks across lines on a phone. */
 #fpl-home .hm-then .ln{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #fpl-home .hm-then b{color:var(--fpl-ink);font-weight:600;display:inline-block;min-width:4.2em}
 #fpl-home .hm-then .t{color:var(--fpl-gold);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+/* The named game keeps the owner's casing ("GG's Birthday"), smaller and bold rather than the
+   spaced capitals the time uses: capitals made it shout and run off a phone line. */
+#fpl-home .hm-then .t.ev{color:var(--fpl-pink);text-transform:none;letter-spacing:0;font-size:.82rem;font-weight:700}
 #fpl-home .hm-links{margin:12px 0 0;display:flex;gap:18px;flex-wrap:wrap;font-weight:600}
 
 #fpl-home .hm-grid{margin:14px 0 0;display:grid;gap:14px}
@@ -312,6 +321,8 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
       if (n.reasons && n.reasons.length) bits.push(n.reasons.join(" · "));
       small.textContent = bits.join(" · ");
       if (n.multiplier > 1) small.appendChild(el("span", "dbl", n.multiplier === 2 ? "Double points" : n.multiplier === 3 ? "Triple points" : "×" + n.multiplier + " points"));
+      // The owner's named game ("Ducky Game", a birthday), from his schedule sheet, as text.
+      if (n.event) small.appendChild(el("span", "ev", n.event));
     }
     // Then the three games after it, on one line: enough to plan the week without a list.
     var then = document.getElementById("hm-then");
@@ -323,6 +334,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
         ln.appendChild(document.createTextNode(" " + x.venue));
         if (x.start) { ln.appendChild(document.createTextNode(" ")); ln.appendChild(el("span", "t", x.start)); }
         if (x.multiplier > 1) { ln.appendChild(document.createTextNode(" ")); ln.appendChild(el("span", "t", x.multiplier === 2 ? "Double points" : x.multiplier === 3 ? "Triple points" : "×" + x.multiplier)); }
+        if (x.event) { ln.appendChild(document.createTextNode(" ")); ln.appendChild(el("span", "t ev", x.event)); }
         then.appendChild(ln);
       });
     }

@@ -177,6 +177,9 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 #fpl-schedule .date{color:var(--fpl-dim);font-size:.82rem}
 #fpl-schedule .venue{font-size:1.02rem;color:var(--fpl-ink);min-width:0}
 #fpl-schedule .why{display:block;color:var(--fpl-gold);font-size:.8rem;margin-top:2px}
+/* The owner's named game for the night (schedule.json `event`: "Ducky Game", "Bounty Game", a
+   birthday). Pink so it reads as a different kind of note from the gold points lines. */
+#fpl-schedule .ev{display:block;color:var(--fpl-pink);font-size:.8rem;font-weight:700;margin-top:2px}
 #fpl-schedule .mult{
   font-weight:800;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
   padding:5px 9px;border-radius:6px;white-space:nowrap;background:var(--fpl-gold);color:#06030a;
@@ -229,6 +232,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 #fpl-schedule .fpl-grid .gv{font-size:.9rem;color:#fff;line-height:1.25;margin-top:4px}
 #fpl-schedule .fpl-grid .gt{font-size:.78rem;color:var(--fpl-gold)}
 #fpl-schedule .fpl-grid .gw{font-size:.74rem;color:var(--fpl-gold);line-height:1.2}
+#fpl-schedule .fpl-grid .ge{font-size:.76rem;color:var(--fpl-pink);font-weight:700;line-height:1.2}
 #fpl-schedule .fpl-grid .gd.today .gt{color:var(--fpl-cyan);font-weight:800}
 #fpl-schedule[data-view="grid"] .fpl-grid[hidden]{display:none}
 /* The phone list shows ONE WEEK at a time, seven days from today, and the pager swaps the week
@@ -347,6 +351,8 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     if (n.reasons && n.reasons.length) {
       venue.appendChild(el("span", "why", n.reasons.join(" · ")));
     }
+    // The owner's named game ("Ducky Game", a birthday) — his wording from his own sheet, as text.
+    if (n.event) { venue.appendChild(el("span", "ev", n.event)); }
     li.appendChild(venue);
 
     if (n.multiplier > 1) { li.appendChild(el("div", "mult", multLabel(n.multiplier))); }
@@ -442,6 +448,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
         if (n.start) { cell.appendChild(el("div", "gt", n.is_today ? (n.start === "Noon" ? "Today at noon" : "Tonight at " + n.start) : n.start)); }
         if (n.multiplier > 1) { cell.appendChild(el("div", "gb", multLabel(n.multiplier))); }
         if (n.reasons && n.reasons.length) { cell.appendChild(el("div", "gw", n.reasons.join(" \u00b7 "))); }
+        if (n.event) { cell.appendChild(el("div", "ge", n.event)); }
       }
       grid.appendChild(cell);
     }
