@@ -181,6 +181,10 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 /* The owner's named game for the night (schedule.json `event`: "Ducky Game", "Bounty Game", a
    birthday). Pink so it reads as a different kind of note from the gold points lines. */
 #fpl-schedule .ev{display:block;color:var(--fpl-pink);font-size:.8rem;font-weight:700;margin-top:2px}
+/* RSVP for that game: one tap from the schedule to the RSVP page with the game preselected
+   (Jason, 2026-10-24: "one less click is better"). Upcoming games only. */
+#fpl-schedule a.rs{display:inline-block;margin-top:6px;color:var(--fpl-cyan);font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:.04em}
+#fpl-schedule a.rs:hover{text-decoration:underline}
 #fpl-schedule .mult{
   font-weight:800;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
   padding:5px 9px;border-radius:6px;white-space:nowrap;background:var(--fpl-gold);color:#06030a;
@@ -234,6 +238,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 #fpl-schedule .fpl-grid .gt{font-size:.78rem;color:var(--fpl-gold)}
 #fpl-schedule .fpl-grid .gw{font-size:.74rem;color:var(--fpl-gold);line-height:1.2}
 #fpl-schedule .fpl-grid .ge{font-size:.76rem;color:var(--fpl-pink);font-weight:700;line-height:1.2}
+#fpl-schedule .fpl-grid a.rs{margin-top:auto;padding-top:4px;font-size:.74rem}
 #fpl-schedule .fpl-grid .gd.today .gt{color:var(--fpl-cyan);font-weight:800}
 #fpl-schedule[data-view="grid"] .fpl-grid[hidden]{display:none}
 /* The phone list shows ONE WEEK at a time, seven days from today, and the pager swaps the week
@@ -320,6 +325,16 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     return m === 2 ? "Double points" : m === 3 ? "Triple points" : "×" + m + " points";
   }
 
+  // The RSVP page lives on the same host as the feed, with the game preselected. Upcoming
+  // games only: a played or past game has nothing to RSVP for.
+  function rsvpLink(n) {
+    if (n.played || n.past) { return null; }
+    var a = el("a", "rs", "RSVP →");
+    try { a.href = new URL(root.getAttribute("data-feed")).origin + "/rsvp?night=" + encodeURIComponent(n.iso); }
+    catch (e) { return null; }
+    return a;
+  }
+
   function week(w) {
     var li = el("li", w.past ? "past" : "");
     li.appendChild(el("span", "wl", w.label));
@@ -354,6 +369,8 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     }
     // The owner's named game ("Ducky Game", a birthday) — his wording from his own sheet, as text.
     if (n.event) { venue.appendChild(el("span", "ev", n.event)); }
+    var rs = rsvpLink(n);
+    if (rs) { venue.appendChild(rs); }
     li.appendChild(venue);
 
     if (n.multiplier > 1) { li.appendChild(el("div", "mult", multLabel(n.multiplier))); }
@@ -450,6 +467,8 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
         if (n.multiplier > 1) { cell.appendChild(el("div", "gb", multLabel(n.multiplier))); }
         if (n.reasons && n.reasons.length) { cell.appendChild(el("div", "gw", n.reasons.join(" \u00b7 "))); }
         if (n.event) { cell.appendChild(el("div", "ge", n.event)); }
+        var rs = rsvpLink(n);
+        if (rs) { cell.appendChild(rs); }
       }
       grid.appendChild(cell);
     }

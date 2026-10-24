@@ -129,7 +129,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     <p class="hm-big" id="hm-next-big">Loading the schedule&hellip;</p>
     <p class="hm-small" id="hm-next-small"></p>
     <p class="hm-then" id="hm-then"></p>
-    <p class="hm-links"><a href="https://app.falconpokerleague.com/rsvp">RSVP &rarr;</a> <a href="/schedule/">Full schedule &rarr;</a> <a href="/venues/">Venues &amp; maps &rarr;</a></p>
+    <p class="hm-links"><a id="hm-rsvp" href="https://app.falconpokerleague.com/rsvp">RSVP &rarr;</a> <a href="/schedule/">Full schedule &rarr;</a> <a href="/venues/">Venues &amp; maps &rarr;</a></p>
   </section>
 
   <div class="hm-grid">
@@ -324,6 +324,9 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
       if (n.multiplier > 1) small.appendChild(el("span", "dbl", n.multiplier === 2 ? "Double points" : n.multiplier === 3 ? "Triple points" : "×" + n.multiplier + " points"));
       // The owner's named game ("Ducky Game", a birthday), from his schedule sheet, as text.
       if (n.event) small.appendChild(el("span", "ev", n.event));
+      // The RSVP link opens the next game's form directly (one less tap).
+      var rl = document.getElementById("hm-rsvp");
+      if (rl && n.iso) rl.href = "https://app.falconpokerleague.com/rsvp?night=" + encodeURIComponent(n.iso);
     }
     // Then the three games after it, on one line: enough to plan the week without a list.
     var then = document.getElementById("hm-then");
