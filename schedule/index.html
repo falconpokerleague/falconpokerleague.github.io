@@ -185,6 +185,10 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
    (Jason, 2026-10-24: "one less click is better"). Upcoming games only. */
 #fpl-schedule a.rs{display:inline-block;margin-top:6px;color:var(--fpl-cyan);font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:.04em}
 #fpl-schedule a.rs:hover{text-decoration:underline}
+/* The merged head count for the game the owner has built his list for (schedule.json `rsvp`:
+   his sheet's checked names plus the site's RSVPs, one per person). That night only. */
+#fpl-schedule .rsvpn{display:block;color:var(--fpl-ink);font-size:.8rem;font-weight:700;margin-top:4px}
+#fpl-schedule .fpl-grid .rsvpn{font-size:.74rem;margin-top:2px}
 #fpl-schedule .mult{
   font-weight:800;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
   padding:5px 9px;border-radius:6px;white-space:nowrap;background:var(--fpl-gold);color:#06030a;
@@ -369,6 +373,9 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     }
     // The owner's named game ("Ducky Game", a birthday) — his wording from his own sheet, as text.
     if (n.event) { venue.appendChild(el("span", "ev", n.event)); }
+    // The merged head count for the game the owner has built his list for (schedule.json
+    // `rsvp`: his sheet's checked names plus the site's, one per person). Null on other nights.
+    if (typeof n.rsvp === "number" && n.rsvp > 0) { venue.appendChild(el("span", "rsvpn", n.rsvp + " RSVP'd")); }
     var rs = rsvpLink(n);
     if (rs) { venue.appendChild(rs); }
     li.appendChild(venue);
@@ -467,6 +474,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
         if (n.multiplier > 1) { cell.appendChild(el("div", "gb", multLabel(n.multiplier))); }
         if (n.reasons && n.reasons.length) { cell.appendChild(el("div", "gw", n.reasons.join(" \u00b7 "))); }
         if (n.event) { cell.appendChild(el("div", "ge", n.event)); }
+        if (typeof n.rsvp === "number" && n.rsvp > 0) { cell.appendChild(el("div", "rsvpn", n.rsvp + " RSVP'd")); }
         var rs = rsvpLink(n);
         if (rs) { cell.appendChild(rs); }
       }
