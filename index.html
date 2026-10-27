@@ -206,6 +206,12 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
   display:inline-block;margin-left:8px;padding:1px 9px;border-radius:999px;
   font-size:.74rem;font-weight:800;letter-spacing:.08em;color:var(--fpl-pink);border:1px solid var(--fpl-pink);
 }
+/* The RSVP head count for the next game (schedule.json `rsvp`), an outlined pill in the ink color
+   so it reads as a fact about the night, not a points note. Absent until the owner has his list. */
+#fpl-home .hm-small .rsvpn{
+  display:inline-block;margin-left:8px;padding:1px 9px;border-radius:999px;
+  font-size:.74rem;font-weight:800;letter-spacing:.08em;color:var(--fpl-ink);border:1px solid var(--fpl-ink);
+}
 #fpl-home .hm-then{margin:10px 0 0;color:var(--fpl-dim);font-size:.92rem;line-height:1.6}
 /* One game per line, so a venue name never breaks across lines on a phone. */
 #fpl-home .hm-then .ln{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -324,6 +330,9 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
       if (n.multiplier > 1) small.appendChild(el("span", "dbl", n.multiplier === 2 ? "Double points" : n.multiplier === 3 ? "Triple points" : "×" + n.multiplier + " points"));
       // The owner's named game ("Ducky Game", a birthday), from his schedule sheet, as text.
       if (n.event) small.appendChild(el("span", "ev", n.event));
+      // The merged head count once the owner has built his list for this game (schedule.json
+      // `rsvp`: his sheet's checked names plus the site's, one per person); null before that.
+      if (typeof n.rsvp === "number" && n.rsvp > 0) small.appendChild(el("span", "rsvpn", n.rsvp + " RSVP'd"));
       // The RSVP link opens the next game's form directly (one less tap).
       var rl = document.getElementById("hm-rsvp");
       if (rl && n.iso) rl.href = "https://app.falconpokerleague.com/rsvp?night=" + encodeURIComponent(n.iso);
