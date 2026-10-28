@@ -185,6 +185,9 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
    (Jason, 2026-10-24: "one less click is better"). Upcoming games only. */
 #fpl-schedule a.rs{display:inline-block;margin-top:6px;color:var(--fpl-cyan);font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:.04em}
 #fpl-schedule a.rs:hover{text-decoration:underline}
+/* With a count on the night, the link drops under the pill instead of crowding it on the same line
+   (Jason, 2026-10-28: on a phone "the pill [is] right by the RSVP link and is hard to see"). */
+#fpl-schedule .rsvpn + a.rs{display:block;margin-top:8px}
 /* The merged head count for the game the owner has built his list for (schedule.json `rsvp`:
    his sheet's checked names plus the site's RSVPs, one per person). That night only. */
 /* Jason, 2026-10-28 (from four mockups, review/rsvp-pill-designs.html): "The solid cyan with
