@@ -187,8 +187,19 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
 #fpl-schedule a.rs:hover{text-decoration:underline}
 /* The merged head count for the game the owner has built his list for (schedule.json `rsvp`:
    his sheet's checked names plus the site's RSVPs, one per person). That night only. */
-#fpl-schedule .rsvpn{display:block;color:var(--fpl-ink);font-size:.8rem;font-weight:700;margin-top:4px}
-#fpl-schedule .fpl-grid .rsvpn{font-size:.74rem;margin-top:2px}
+/* Jason, 2026-10-28 (from four mockups, review/rsvp-pill-designs.html): "The solid cyan with
+   breathing glow is our pick" — a filled cyan pill, the number a step larger, whose halo swells
+   and fades every 2.6 s so the count is the one thing on the row that moves. Still for anyone
+   whose phone asks for reduced motion. */
+#fpl-schedule .rsvpn{
+  display:inline-block;margin-top:6px;padding:5px 13px;border-radius:999px;white-space:nowrap;
+  font-size:.98rem;font-weight:800;letter-spacing:.04em;color:#06030a;background:var(--fpl-cyan);
+  font-variant-numeric:tabular-nums;animation:fpl-rsvp-glow 2.6s ease-in-out infinite;
+}
+#fpl-schedule .rsvpn b{font-size:1.15em}
+#fpl-schedule .fpl-grid .rsvpn{font-size:.84rem;padding:3px 10px;margin-top:4px;align-self:flex-start}
+@keyframes fpl-rsvp-glow{0%,100%{box-shadow:0 0 0 0 rgba(38,230,245,0)}50%{box-shadow:0 0 18px 4px rgba(38,230,245,.55)}}
+@media (prefers-reduced-motion:reduce){ #fpl-schedule .rsvpn{animation:none} }  /* the space after the brace keeps Jinja from reading a comment opener */
 #fpl-schedule .mult{
   font-weight:800;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
   padding:5px 9px;border-radius:6px;white-space:nowrap;background:var(--fpl-gold);color:#06030a;
@@ -319,6 +330,13 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     if (text !== undefined && text !== null) { n.textContent = String(text); }
     return n;
   }
+  // "7 RSVP'd": the merged head count, the number a step larger than the word.
+  function rsvpPill(count) {
+    var s = el("span", "rsvpn");
+    s.appendChild(el("b", null, count));
+    s.appendChild(document.createTextNode(" RSVP'd"));
+    return s;
+  }
 
   function fail(msg) {
     sub.textContent = msg;
@@ -375,7 +393,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
     if (n.event) { venue.appendChild(el("span", "ev", n.event)); }
     // The merged head count for the game the owner has built his list for (schedule.json
     // `rsvp`: his sheet's checked names plus the site's, one per person). Null on other nights.
-    if (typeof n.rsvp === "number" && n.rsvp > 0) { venue.appendChild(el("span", "rsvpn", n.rsvp + " RSVP'd")); }
+    if (typeof n.rsvp === "number" && n.rsvp > 0) { venue.appendChild(rsvpPill(n.rsvp)); }
     var rs = rsvpLink(n);
     if (rs) { venue.appendChild(rs); }
     li.appendChild(venue);
@@ -474,7 +492,7 @@ html body #fpl-home .hm-title{font-size:clamp(3rem,11vw,5.6rem)}
         if (n.multiplier > 1) { cell.appendChild(el("div", "gb", multLabel(n.multiplier))); }
         if (n.reasons && n.reasons.length) { cell.appendChild(el("div", "gw", n.reasons.join(" \u00b7 "))); }
         if (n.event) { cell.appendChild(el("div", "ge", n.event)); }
-        if (typeof n.rsvp === "number" && n.rsvp > 0) { cell.appendChild(el("div", "rsvpn", n.rsvp + " RSVP'd")); }
+        if (typeof n.rsvp === "number" && n.rsvp > 0) { cell.appendChild(rsvpPill(n.rsvp)); }
         var rs = rsvpLink(n);
         if (rs) { cell.appendChild(rs); }
       }
